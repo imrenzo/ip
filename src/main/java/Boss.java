@@ -12,7 +12,9 @@ public class Boss {
         String input = scanner.nextLine();
         while (!input.equals("bye")) {
             if (input.equals("list")) {
-                System.out.println(lst);
+                for (int i = 0; i < lst.size(); i++) {
+                    System.out.println(i + 1 + ": " + lst.get(i));
+                }
             } else {
                 lst.add(input);
                 System.out.println("added: " + input);
