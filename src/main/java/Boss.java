@@ -12,49 +12,80 @@ public class Boss {
 
         Scanner scanner = new Scanner(System.in);
         while (true) {
-            String input = scanner.nextLine();
-            String cmdType = input.split(" ")[0];
-            String removeCmd = String.join("", input.split(cmdType)).trim();
+            try {
+                String input = scanner.nextLine();
+                String cmdType = input.split(" ")[0];
+                String removeCmd = String.join("", input.split(cmdType)).trim();
 
-            switch (cmdType) {
-                case "bye": {
-                    System.out.println("Bye. Hope to see you again soon!");
-                    return;
+                switch (cmdType) {
+                    case "bye": {
+                        System.out.println("Bye. Hope to see you again soon!");
+                        return;
+                    }
+                    case "list": {
+                        printTasks();
+                        break;
+                    }
+                    case "mark": {
+                        updateTaskStatus(removeCmd, true);
+                        break;
+                    }
+                    case "unmark": {
+                        updateTaskStatus(removeCmd, false);
+                        break;
+                    }
+                    case "todo", "deadline", "event": {
+                        Task todoTask = parseTask(cmdType, removeCmd);
+                        if (todoTask != null) {
+                            addTasks(todoTask);
+                        }
+                        break;
+                    }
+                    default: {
+                        throw new BossException("Invalid command");
+                    }
                 }
-                case "list": {
-                    printTasks();
-                    break;
-                }
-                case "mark": {
-                    updateTaskStatus(removeCmd, true);
-                    break;
-                }
-                case "unmark": {
-                    updateTaskStatus(removeCmd, false);
-                    break;
-                }
-                case "todo": {
-                    Task task = new ToDos(removeCmd);
-                    addTasks(task);
-                    break;
-                }
-                case "deadline": {
-                    String[] s = removeCmd.split("/by ", 2);
-                    Task task = new Deadlines(s[0], s[1]);
-                    addTasks(task);
-                    break;
-                }
-                case "event": {
-                    String[] s = removeCmd.split("/from ", 2);
-                    Task task = new Events(s[0], s[1]);
-                    addTasks(task);
-                    break;
-                }
-                default: {
-                    System.out.println("invalid command");
-                    break;
-                }
+            } catch (BossException e) {
+                System.out.println("Error: " + e.getMessage());
+            } catch (NumberFormatException e) {
+                System.out.println("Error: Please enter a proper number");
+            }catch (Exception e) {
+                System.out.println("Unexpected error: " + e.getMessage());
             }
+        }
+    }
+
+    private static Task parseTask(String cmdType, String taskInfo) throws BossException {
+        if (taskInfo.isBlank()) {
+            throw new BossException("Please enter a description for a " + cmdType + " task.");
+        }
+        switch (cmdType) {
+            case "todo": {
+                return new ToDos(taskInfo);
+            }
+            case "deadline": {
+                String[] s = taskInfo.split("/by ", 2);
+                if (s.length < 2 || s[0].isBlank() || s[1].isBlank()) {
+                    throw new BossException("Invalid format for deadline task.");
+                }
+                return new Deadlines(s[0], s[1]);
+            }
+            case "event": {
+                String[] s = taskInfo.split("/from ", 2);
+                if (s.length < 2 || s[0].isBlank() || s[1].isBlank()) {
+                    throw new BossException("Invalid format for event task.");
+                }
+                String description = s[0];
+                String[] dates = s[1].split("/to", 2);
+                if (dates.length < 2 || dates[0].isBlank() || dates[1].isBlank()) {
+                    throw new BossException("Invalid format for start and end date/timings.");
+                }
+                String fromDate = dates[0].trim();
+                String toDate = dates[1].trim();
+                return new Events(description, fromDate, toDate);
+            }
+            default:
+                throw new BossException("unrecognised cmd type: " + cmdType);
         }
     }
 
@@ -72,11 +103,10 @@ public class Boss {
         }
     }
 
-    private static void updateTaskStatus(String indexStr, boolean isDone) {
+    private static void updateTaskStatus(String indexStr, boolean isDone) throws BossException {
         int index = Integer.parseInt(indexStr) - 1;
         if (index >= tasks.size()) {
-            System.out.println("invalid index number");
-            return;
+            throw new BossException("Invalid index number");
         }
         Task currentTask = tasks.get(index);
         if (isDone) {

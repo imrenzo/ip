@@ -2,11 +2,10 @@ public class Events extends Task{
     private final String fromDate;
     private final String toDate;
 
-    public Events(String description, String date) {
+    public Events(String description, String fromDate, String toDate) {
         super(description);
-        String[] dates = date.split("/to", 2);
-        this.fromDate = dates[0].trim();
-        this.toDate = dates[1].trim();
+        this.fromDate = fromDate;
+        this.toDate = toDate;
     }
 
     @Override
