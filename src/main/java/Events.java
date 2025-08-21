@@ -4,13 +4,13 @@ public class Events extends Task{
 
     public Events(String description, String date) {
         super(description);
-        String[] dates = date.split("/to");
+        String[] dates = date.split("/to", 2);
         this.fromDate = dates[0].trim();
         this.toDate = dates[1].trim();
     }
 
     @Override
     public String toString() {
-        return "[D]" + super.toString() + "(from: " + this.fromDate + " to: " + this.toDate + ")";
+        return "[E]" + super.toString() + "(from: " + this.fromDate + " to: " + this.toDate + ")";
     }
 }
