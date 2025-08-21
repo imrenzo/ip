@@ -4,6 +4,18 @@ import java.util.Scanner;
 public class Boss {
     private static final ArrayList<Task> tasks = new ArrayList<>();
 
+    private enum CmdType {
+        BYE, LIST, MARK, UNMARK, TODO, DEADLINE, EVENT, DELETE;
+
+        private static CmdType fromString(String command) throws BossException {
+            try {
+                return CmdType.valueOf(command.toUpperCase());
+            } catch (IllegalArgumentException e) {
+                throw new BossException("Invalid command");
+            }
+        }
+    }
+
     public static void main(String[] args) {
         String name = "Boss";
         System.out.println("Hello! I'm " + name);
@@ -13,34 +25,33 @@ public class Boss {
         while (true) {
             try {
                 String input = scanner.nextLine();
-                String cmdType = input.split(" ")[0];
-                String removeCmd = String.join("", input.split(cmdType)).trim();
+                String cmdString = input.split(" ")[0];
+                CmdType cmdType = CmdType.fromString(cmdString);
+                String removeCmd = String.join("", input.split(cmdString)).trim();
 
                 switch (cmdType) {
-                    case "bye": {
+                    case BYE: {
                         System.out.println("Bye. Hope to see you again soon!");
                         return;
                     }
-                    case "list": {
+                    case LIST: {
                         printTasks();
                         break;
                     }
-                    case "mark": {
+                    case MARK: {
                         updateTaskStatus(removeCmd, true);
                         break;
                     }
-                    case "unmark": {
+                    case UNMARK: {
                         updateTaskStatus(removeCmd, false);
                         break;
                     }
-                    case "todo", "deadline", "event": {
-                        Task todoTask = parseTask(cmdType, removeCmd);
-                        if (todoTask != null) {
-                            addTasks(todoTask);
-                        }
+                    case TODO, DEADLINE, EVENT: {
+                        Task todoTask = parseTask(cmdString, removeCmd);
+                        addTasks(todoTask);
                         break;
                     }
-                    case "delete": {
+                    case DELETE: {
                         deleteTask(removeCmd);
                         break;
                     }
