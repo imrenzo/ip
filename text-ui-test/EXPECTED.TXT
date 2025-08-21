@@ -29,4 +29,9 @@ Error: Invalid format for deadline task.
 Error: Invalid format for start and end date/timings.
 Error: Invalid index number
 Error: Please enter a proper number
+Error: Invalid index number
+Error: Please enter a proper number
+Noted. I've removed this task:
+[D][X] return book (by: Sunday)
+Now you have 2 tasks in the list.
 Bye. Hope to see you again soon!

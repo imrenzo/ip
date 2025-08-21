@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Boss {
@@ -41,6 +40,10 @@ public class Boss {
                         }
                         break;
                     }
+                    case "delete": {
+                        deleteTask(removeCmd);
+                        break;
+                    }
                     default: {
                         throw new BossException("Invalid command");
                     }
@@ -53,6 +56,23 @@ public class Boss {
                 System.out.println("Unexpected error: " + e.getMessage());
             }
         }
+    }
+
+    private static void deleteTask(String indexStr) throws BossException {
+        int index = validateTasksIndex(indexStr);
+        Task task = tasks.get(index);
+        tasks.remove(index);
+        System.out.println("Noted. I've removed this task:");
+        System.out.println(task);
+        System.out.println("Now you have " + tasks.size() + " tasks in the list.");
+    }
+
+    private static int validateTasksIndex(String indexStr) throws BossException {
+        int index = Integer.parseInt(indexStr) - 1;
+        if (index >= tasks.size() || index < 0) {
+            throw new BossException("Invalid index number");
+        }
+        return index;
     }
 
     private static Task parseTask(String cmdType, String taskInfo) throws BossException {
@@ -104,10 +124,7 @@ public class Boss {
     }
 
     private static void updateTaskStatus(String indexStr, boolean isDone) throws BossException {
-        int index = Integer.parseInt(indexStr) - 1;
-        if (index >= tasks.size()) {
-            throw new BossException("Invalid index number");
-        }
+        int index = validateTasksIndex(indexStr);
         Task currentTask = tasks.get(index);
         if (isDone) {
             currentTask.setDone();

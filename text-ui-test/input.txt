@@ -12,4 +12,7 @@ deadline return book by Sunday
 event project meeting /from Mon 2pm to 4pm
 mark 100
 mark 1L
+delete 100
+delete 2L
+delete 2
 bye
