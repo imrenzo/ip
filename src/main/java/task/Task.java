@@ -2,6 +2,9 @@ package task;
 import bossexceptions.BossException;
 import commands.Commands;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 /**
  * Contains information a task needs to have.
  */
@@ -58,7 +61,22 @@ public abstract class Task {
                 if (s.length < 2 || s[0].isBlank() || s[1].isBlank()) {
                     throw new BossException("Invalid format for deadline task.");
                 }
-                return new Deadlines(s[0], s[1]);
+                String description = s[0].trim();
+                String dateAndTime = s[1].trim();
+
+                String[] dateAndTimeSplit = dateAndTime.split(" ");
+                if (dateAndTimeSplit.length < 2 || dateAndTimeSplit[0].isBlank() || dateAndTimeSplit[1].isBlank()) {
+                    throw new BossException("Invalid format for date and time.");
+                }
+
+                String time = dateAndTimeSplit[1].trim();
+                // Date format string is in dd-MM-yyyy
+                // However task print out in yyyy-MM-dd
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                LocalDate date =  LocalDate.parse(
+                        dateAndTimeSplit[0].replace("/", "-")
+                                .trim(), formatter);
+                return new Deadlines(description, date, time);
             }
             case EVENT -> {
                 String[] s = taskInfo.split("/from ", 2);

@@ -65,7 +65,7 @@ public class Boss {
                 System.out.println("Unexpected error: " + e.getMessage());
             }
         }
-        }
+    }
 
     /**
      * Deletes task from tasks array.
