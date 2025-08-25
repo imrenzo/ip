@@ -1,11 +1,15 @@
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.File;
 
 /**
  * Simulates a Personal Assistant Chatbot.
  */
 public class Boss {
     private static final ArrayList<Task> tasks = new ArrayList<>();
+    private static final String filePath = "data/boss.txt";
+    private static final String name = "Boss";
 
     private enum CmdType {
         BYE, LIST, MARK, UNMARK, TODO, DEADLINE, EVENT, DELETE;
@@ -20,13 +24,16 @@ public class Boss {
     }
 
     public static void main(String[] args) {
-        String name = "Boss";
-        System.out.println("Hello! I'm " + name);
-        System.out.println("What can I do for you?");
+        try {
+            // loads tasks saved on disk into tasks array
+            loadFileContents();
 
-        Scanner scanner = new Scanner(System.in);
-        while (true) {
-            try {
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Hello! I'm " + name);
+            System.out.println("What can I do for you?");
+
+            // continuously loops to handle user commands
+            while (true) {
                 String input = scanner.nextLine();
                 String cmdString = input.split(" ")[0];
                 CmdType cmdType = CmdType.fromString(cmdString);
@@ -62,18 +69,44 @@ public class Boss {
                         throw new BossException("Invalid command");
                     }
                 }
-            } catch (BossException e) {
-                System.out.println("Error: " + e.getMessage());
-            } catch (NumberFormatException e) {
-                System.out.println("Error: Please enter a proper number");
-            } catch (Exception e) {
-                System.out.println("Unexpected error: " + e.getMessage());
             }
+        } catch (FileNotFoundException e) {
+            System.out.println("Error: Please create a boss.txt file under [project root]/data/boss.txt");
+            throw new RuntimeException(e.getMessage());
+        } catch (BossException e) {
+            System.out.println("Error: " + e.getMessage());
+        } catch (NumberFormatException e) {
+            System.out.println("Error: Please enter a proper number");
+        } catch (Exception e) {
+            System.out.println("Unexpected error: " + e.getMessage());
         }
     }
 
     /**
-     * Handles deletion of task from tasks array.
+     * Loads all task to tasks array from txt file.
+     *
+     * @throws FileNotFoundException If invalid format for indexStr.
+     */
+    private static void loadFileContents() throws FileNotFoundException, BossException {
+        File f = new File(filePath);
+        Scanner s = new Scanner(f);
+        while (s.hasNext()) {
+            String line = s.nextLine();
+            String[] taskStr = line.split("\\|");
+            if (taskStr.length != 3 || taskStr[0].isBlank() || taskStr[1].isBlank() || taskStr[2].isBlank()) {
+                throw new BossException("Invalid format for task " + line + " in loaded file.");
+            }
+
+            String taskType = taskStr[0].trim();
+            boolean isDone = Integer.parseInt(taskStr[1].trim()) == 1;
+            String description = taskStr[2].trim();
+            Task task = parseTask(taskType, isDone, description);
+            tasks.add(task);
+        }
+    }
+
+    /**
+     * Deletes task from tasks array.
      *
      * @param indexStr string format of index in tasks to remove element.
      * @throws BossException If index value < 0 or greater than tasks array size.
@@ -89,6 +122,7 @@ public class Boss {
     }
 
     /**
+     * Returns int value of indexStr
      * Validates that indexStr can be parsed as an int.
      * Validates that index can be found in tasks array.
      *
@@ -145,6 +179,14 @@ public class Boss {
             default:
                 throw new BossException("unrecognised cmd type: " + cmdType);
         }
+    }
+
+    private static Task parseTask(String cmdType, boolean isDone, String taskInfo) throws BossException {
+        Task task = parseTask(cmdType, taskInfo);
+        if (isDone) {
+            task.setDone();
+        }
+        return task;
     }
 
     /**
