@@ -3,6 +3,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
+import task.Task;
+import bossexceptions.BossException;
 
 /**
  * Simulates a Personal Assistant Chatbot.

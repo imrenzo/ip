@@ -1,3 +1,6 @@
+package task;
+import bossexceptions.BossException;
+
 /**
  * Contains information a task needs to have.
  */

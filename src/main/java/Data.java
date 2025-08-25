@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.FileWriter;
+import task.Task;
+import bossexceptions.BossException;
 
 /**
  * Contains methods to handle manipulation of txt file containing list of tasks.
