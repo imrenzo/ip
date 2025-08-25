@@ -4,9 +4,13 @@
 public abstract class Task {
     private final String description;
     private boolean isDone;
+    private final String commandString;
+    private final String commandCode;
 
-    public Task(String description) {
+    public Task(String description, String commandString) {
         this.description = description;
+        this.commandString = commandString;
+        this.commandCode = String.valueOf(commandString.charAt(0)).toUpperCase();
         this.isDone = false;
     }
 
@@ -20,6 +24,10 @@ public abstract class Task {
 
     public String getStatusIcon() {
         return (isDone ? "X" : " "); // mark done task with X
+    }
+
+    public String getCommandCode() {
+        return this.commandCode;
     }
 
     @Override

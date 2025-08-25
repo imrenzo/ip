@@ -4,9 +4,10 @@
 public class Events extends Task{
     private final String fromDate;
     private final String toDate;
+    private static final String commandString = "event";
 
     public Events(String description, String fromDate, String toDate) {
-        super(description);
+        super(description, commandString);
         this.fromDate = fromDate;
         this.toDate = toDate;
     }

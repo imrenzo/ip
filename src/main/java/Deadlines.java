@@ -3,9 +3,10 @@
  */
 public class Deadlines extends Task{
     private final String date;
+    private static final String commandString = "deadline";
 
     public Deadlines(String description, String date) {
-        super(description);
+        super(description, commandString);
         this.date = date;
     }
 

@@ -1,32 +1,72 @@
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Scanner;
-import java.io.File;
 
 /**
  * Simulates a Personal Assistant Chatbot.
  */
 public class Boss {
-    private static final ArrayList<Task> tasks = new ArrayList<>();
+    private static ArrayList<Task> tasks;
     private static final String filePath = "data/boss.txt";
     private static final String name = "Boss";
 
-    private enum CmdType {
-        BYE, LIST, MARK, UNMARK, TODO, DEADLINE, EVENT, DELETE;
+    public enum CmdType {
+        BYE("bye", null),
+        LIST("list", null),
+        MARK("mark", null),
+        UNMARK("unmark", null),
+        TODO("todo", "T"),
+        DEADLINE("deadline", "D"),
+        EVENT("event", "E"),
+        DELETE("delete", null);
 
+        private final String commandName;
+        private final String shortCode;
+
+        CmdType(String commandName, String shortCode) {
+            this.commandName = commandName;
+            this.shortCode = shortCode;
+        }
+
+        /**
+         * Returns CmdType based on command passed by user.
+         *
+         * @param command string passed by user.
+         * @return CmdType
+         * @throws BossException If command type invalid
+         */
         private static CmdType fromString(String command) throws BossException {
-            try {
-                return CmdType.valueOf(command.toUpperCase());
-            } catch (IllegalArgumentException e) {
-                throw new BossException("Invalid command");
+            for (CmdType cmd : CmdType.values()) {
+                if (Objects.equals(cmd.commandName, command)) {
+                    return cmd;
+                }
             }
+            throw new BossException("Invalid command");
+        }
+
+        /**
+         * Converts short form of Task into their long code.
+         *
+         * @param code short code of task.
+         * @return long code of task
+         * @throws BossException If command type invalid
+         */
+        public static String shortCodeToLongCode(String code) throws BossException {
+            for (CmdType cmd : CmdType.values()) {
+                if (Objects.equals(cmd.shortCode, code)) {
+                    return cmd.commandName;
+                }
+            }
+            throw new BossException("Invalid short code");
         }
     }
 
     public static void main(String[] args) {
         try {
             // loads tasks saved on disk into tasks array
-            loadFileContents();
+            tasks = Data.loadFileContents(filePath);
 
             Scanner scanner = new Scanner(System.in);
             System.out.println("Hello! I'm " + name);
@@ -41,6 +81,7 @@ public class Boss {
 
                 switch (cmdType) {
                     case BYE: {
+                        Data.writeToFile(filePath, tasks); // update file with updated tasks
                         System.out.println("Bye. Hope to see you again soon!");
                         return;
                     }
@@ -73,35 +114,14 @@ public class Boss {
         } catch (FileNotFoundException e) {
             System.out.println("Error: Please create a boss.txt file under [project root]/data/boss.txt");
             throw new RuntimeException(e.getMessage());
+        } catch (IOException e) {
+            System.out.println("Error updating ./data/boss.txt: " + e.getMessage());
         } catch (BossException e) {
             System.out.println("Error: " + e.getMessage());
         } catch (NumberFormatException e) {
             System.out.println("Error: Please enter a proper number");
         } catch (Exception e) {
             System.out.println("Unexpected error: " + e.getMessage());
-        }
-    }
-
-    /**
-     * Loads all task to tasks array from txt file.
-     *
-     * @throws FileNotFoundException If invalid format for indexStr.
-     */
-    private static void loadFileContents() throws FileNotFoundException, BossException {
-        File f = new File(filePath);
-        Scanner s = new Scanner(f);
-        while (s.hasNext()) {
-            String line = s.nextLine();
-            String[] taskStr = line.split("\\|");
-            if (taskStr.length != 3 || taskStr[0].isBlank() || taskStr[1].isBlank() || taskStr[2].isBlank()) {
-                throw new BossException("Invalid format for task " + line + " in loaded file.");
-            }
-
-            String taskType = taskStr[0].trim();
-            boolean isDone = Integer.parseInt(taskStr[1].trim()) == 1;
-            String description = taskStr[2].trim();
-            Task task = Task.parseTask(taskType, isDone, description);
-            tasks.add(task);
         }
     }
 
@@ -144,7 +164,7 @@ public class Boss {
      *
      * @param task type of task to create.
      */
-    private static void addTasks(Task task) {
+    private static void addTasks(Task task) throws BossException {
         System.out.println("Got it. I've added this task:");
         tasks.add(task);
         System.out.println(task);
