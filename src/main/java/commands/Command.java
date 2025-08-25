@@ -1,7 +1,7 @@
 package commands;
 
-import Storage.Storage;
-import Ui.Ui;
+import storage.Storage;
+import ui.Ui;
 import bossexceptions.BossException;
 import task.TaskList;
 

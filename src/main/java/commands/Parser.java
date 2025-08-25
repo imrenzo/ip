@@ -1,6 +1,11 @@
 package commands;
 
 import bossexceptions.BossException;
+import commands.others.ListCommand;
+import commands.others.TaskCommand;
+import commands.task.DeleteCommand;
+import commands.task.ExitCommand;
+import commands.task.MarkCommand;
 
 public class Parser {
     public static Command parse(String input) throws BossException {
@@ -13,7 +18,7 @@ public class Parser {
                 return new ExitCommand();
             }
             case LIST -> {
-                return new PrintCommand();
+                return new ListCommand();
             }
             case MARK -> {
                 return new MarkCommand(removeCmd, true);

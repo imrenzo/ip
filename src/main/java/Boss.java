@@ -1,5 +1,5 @@
-import Storage.Storage;
-import Ui.Ui;
+import storage.Storage;
+import ui.Ui;
 import commands.Command;
 import commands.Parser;
 import bossexceptions.BossException;

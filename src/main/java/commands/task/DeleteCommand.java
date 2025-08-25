@@ -1,7 +1,8 @@
-package commands;
+package commands.task;
 
-import Storage.Storage;
-import Ui.Ui;
+import commands.Command;
+import storage.Storage;
+import ui.Ui;
 import bossexceptions.BossException;
 import task.Task;
 import task.TaskList;

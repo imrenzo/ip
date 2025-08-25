@@ -1,12 +1,13 @@
-package commands;
+package commands.others;
 
-import Storage.Storage;
-import Ui.Ui;
+import commands.Command;
+import storage.Storage;
+import ui.Ui;
 import bossexceptions.BossException;
 import task.TaskList;
 
-public class PrintCommand extends Command {
-    public PrintCommand() {
+public class ListCommand extends Command {
+    public ListCommand() {
         super(false);
     }
 
