@@ -57,7 +57,7 @@ public class Boss {
                         break;
                     }
                     case TODO, DEADLINE, EVENT: {
-                        Task todoTask = parseTask(cmdString, removeCmd);
+                        Task todoTask = Task.parseTask(cmdString, removeCmd);
                         addTasks(todoTask);
                         break;
                     }
@@ -100,7 +100,7 @@ public class Boss {
             String taskType = taskStr[0].trim();
             boolean isDone = Integer.parseInt(taskStr[1].trim()) == 1;
             String description = taskStr[2].trim();
-            Task task = parseTask(taskType, isDone, description);
+            Task task = Task.parseTask(taskType, isDone, description);
             tasks.add(task);
         }
     }
@@ -137,56 +137,6 @@ public class Boss {
             throw new BossException("Invalid index number");
         }
         return index;
-    }
-
-    /**
-     * Creates task based on the type of task user wants to create.
-     *
-     * @param cmdType type of task to create.
-     * @param taskInfo description and dates (if required) of task.
-     * @return Task task.
-     * @throws BossException If invalid format for parameters.
-     */
-    private static Task parseTask(String cmdType, String taskInfo) throws BossException {
-        if (taskInfo.isBlank()) {
-            throw new BossException("Please enter a description for a " + cmdType + " task.");
-        }
-        switch (cmdType) {
-            case "todo": {
-                return new ToDos(taskInfo);
-            }
-            case "deadline": {
-                String[] s = taskInfo.split("/by ", 2);
-                if (s.length < 2 || s[0].isBlank() || s[1].isBlank()) {
-                    throw new BossException("Invalid format for deadline task.");
-                }
-                return new Deadlines(s[0], s[1]);
-            }
-            case "event": {
-                String[] s = taskInfo.split("/from ", 2);
-                if (s.length < 2 || s[0].isBlank() || s[1].isBlank()) {
-                    throw new BossException("Invalid format for event task.");
-                }
-                String description = s[0];
-                String[] dates = s[1].split("/to", 2);
-                if (dates.length < 2 || dates[0].isBlank() || dates[1].isBlank()) {
-                    throw new BossException("Invalid format for start and end date/timings.");
-                }
-                String fromDate = dates[0].trim();
-                String toDate = dates[1].trim();
-                return new Events(description, fromDate, toDate);
-            }
-            default:
-                throw new BossException("unrecognised cmd type: " + cmdType);
-        }
-    }
-
-    private static Task parseTask(String cmdType, boolean isDone, String taskInfo) throws BossException {
-        Task task = parseTask(cmdType, taskInfo);
-        if (isDone) {
-            task.setDone();
-        }
-        return task;
     }
 
     /**
