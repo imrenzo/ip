@@ -1,19 +1,24 @@
 package task;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Deadlines: tasks that need to be done before a specific date/time e.g., submit report by 11/10/2019 5pm
  */
 public class Deadlines extends Task{
-    private final String date;
+    private final LocalDate date;
+    private final String time;
     private static final String commandString = "deadline";
 
-    public Deadlines(String description, String date) {
+    public Deadlines(String description, LocalDate date, String time) {
         super(description, commandString);
         this.date = date;
+        this.time = time;
     }
 
     @Override
     public String toString() {
-        return "[D]" + super.toString() + "(by: " + this.date + ")";
+        // date printed out in yyyy-MM-dd format
+        return "[D]" + super.toString() + " (by: " + this.date + " " + this.time + ")";
     }
 }
