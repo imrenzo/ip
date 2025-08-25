@@ -1,0 +1,26 @@
+package commands;
+
+import Storage.Storage;
+import Ui.Ui;
+import bossexceptions.BossException;
+import task.Task;
+import task.TaskList;
+
+public class TaskCommand extends Command {
+    private CommandsEnum command;
+    private String taskInfo;
+
+    public TaskCommand(CommandsEnum command, String taskInfo) {
+        super(false);
+        this.command = command;
+        this.taskInfo = taskInfo;
+    }
+
+    public void execute(TaskList tasks, Ui ui, Storage storage) throws BossException {
+        Task task = Task.parseTask(command, taskInfo);
+        tasks.add(task);
+        ui.displayMessage("Got it. I've added this task:");
+        ui.displayMessage(task.toString());
+        ui.displayMessage("Now you have " + tasks.taskSize() + " tasks in the list.");
+    }
+}

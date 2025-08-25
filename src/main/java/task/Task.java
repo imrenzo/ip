@@ -1,7 +1,7 @@
 package task;
-import bossexceptions.BossException;
-import commands.Commands;
 
+import bossexceptions.BossException;
+import commands.CommandsEnum;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -48,7 +48,7 @@ public abstract class Task {
      * @return Task task.
      * @throws BossException If invalid format for parameters.
      */
-    public static Task parseTask(Commands command, String taskInfo) throws BossException {
+    public static Task parseTask(CommandsEnum command, String taskInfo) throws BossException {
         if (taskInfo.isBlank()) {
             throw new BossException("Please enter a description for a " + command + " task.");
         }
@@ -105,7 +105,7 @@ public abstract class Task {
      * @return Task task.
      * @throws BossException If invalid format for parameters.
      */
-    public static Task parseTask(Commands command, boolean isDone, String taskInfo) throws BossException {
+    public static Task parseTask(CommandsEnum command, boolean isDone, String taskInfo) throws BossException {
         Task task = parseTask(command, taskInfo);
         if (isDone) {
             task.setDone();

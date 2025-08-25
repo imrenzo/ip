@@ -2,7 +2,7 @@ package commands;
 import bossexceptions.BossException;
 import java.util.Objects;
 
-public enum Commands {
+public enum CommandsEnum {
     BYE("bye", null),
     LIST("list", null),
     MARK("mark", null),
@@ -15,7 +15,7 @@ public enum Commands {
     private final String commandName;
     private final String shortCode;
 
-    Commands(String commandName, String shortCode) {
+    CommandsEnum(String commandName, String shortCode) {
         this.commandName = commandName;
         this.shortCode = shortCode;
     }
@@ -27,8 +27,8 @@ public enum Commands {
      * @return CmdType
      * @throws BossException If command type invalid
      */
-    public static Commands fromString(String command) throws BossException {
-        for (Commands cmd : Commands.values()) {
+    public static CommandsEnum fromString(String command) throws BossException {
+        for (CommandsEnum cmd : CommandsEnum.values()) {
             if (Objects.equals(cmd.commandName, command)) {
                 return cmd;
             }
@@ -43,8 +43,8 @@ public enum Commands {
      * @return long code of task
      * @throws BossException If command type invalid
      */
-    public static Commands fromShortCode(String code) throws BossException {
-        for (Commands cmd : Commands.values()) {
+    public static CommandsEnum fromShortCode(String code) throws BossException {
+        for (CommandsEnum cmd : CommandsEnum.values()) {
             if (Objects.equals(cmd.shortCode, code)) {
                 return fromString(cmd.commandName);
             }
