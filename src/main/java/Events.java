@@ -1,3 +1,6 @@
+/**
+ * Events: tasks that start at a specific date/time and ends at a specific date/time.
+ */
 public class Events extends Task{
     private final String fromDate;
     private final String toDate;

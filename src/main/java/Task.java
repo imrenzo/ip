@@ -1,4 +1,7 @@
-    public abstract class Task {
+/**
+ * Contains information a task needs to have.
+ */
+public abstract class Task {
     private final String description;
     private boolean isDone;
 
