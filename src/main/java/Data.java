@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.FileWriter;
+
+import commands.Commands;
 import task.Task;
 import bossexceptions.BossException;
 
@@ -29,7 +31,7 @@ public class Data {
                 throw new BossException("Invalid format for task " + line + " in loaded file.");
             }
 
-            Boss.CmdType taskType = Boss.CmdType.fromShortCode(taskStr[0].trim());
+            Commands taskType = Commands.fromShortCode(taskStr[0].trim());
             boolean isDone = Integer.parseInt(taskStr[1].trim()) == 1;
             String description = taskStr[2].trim();
             Task task = Task.parseTask(taskType, isDone, description);

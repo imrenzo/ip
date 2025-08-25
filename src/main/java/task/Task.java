@@ -1,5 +1,6 @@
 package task;
 import bossexceptions.BossException;
+import commands.Commands;
 
 /**
  * Contains information a task needs to have.
@@ -39,16 +40,16 @@ public abstract class Task {
     /**
      * Creates task based on the type of task user wants to create.
      *
-     * @param cmdType type of task to create.
+     * @param command type of task to create.
      * @param taskInfo description and dates (if required) of task.
      * @return Task task.
      * @throws BossException If invalid format for parameters.
      */
-    public static Task parseTask(Boss.CmdType cmdType, String taskInfo) throws BossException {
+    public static Task parseTask(Commands command, String taskInfo) throws BossException {
         if (taskInfo.isBlank()) {
-            throw new BossException("Please enter a description for a " + cmdType + " task.");
+            throw new BossException("Please enter a description for a " + command + " task.");
         }
-        switch (cmdType) {
+        switch (command) {
             case TODO: {
                 return new ToDos(taskInfo);
             }
@@ -74,21 +75,21 @@ public abstract class Task {
                 return new Events(description, fromDate, toDate);
             }
             default:
-                throw new BossException("unrecognised cmd type: " + cmdType);
+                throw new BossException("unrecognised cmd type: " + command);
         }
     }
 
     /**
      * Creates task based on the type of task user wants to create & marks as done if specified.
      *
-     * @param cmdType type of task to create.
+     * @param command type of task to create.
      * @param isDone mark task as done if true
      * @param taskInfo description and dates (if required) of task.
      * @return Task task.
      * @throws BossException If invalid format for parameters.
      */
-    public static Task parseTask(Boss.CmdType cmdType, boolean isDone, String taskInfo) throws BossException {
-        Task task = parseTask(cmdType, taskInfo);
+    public static Task parseTask(Commands command, boolean isDone, String taskInfo) throws BossException {
+        Task task = parseTask(command, taskInfo);
         if (isDone) {
             task.setDone();
         }

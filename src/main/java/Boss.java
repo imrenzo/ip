@@ -1,10 +1,10 @@
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.Scanner;
 import task.Task;
 import bossexceptions.BossException;
+import commands.Commands;
 
 /**
  * Simulates a Personal Assistant Chatbot.
@@ -13,57 +13,6 @@ public class Boss {
     private static ArrayList<Task> tasks;
     private static final String filePath = "data/boss.txt";
     private static final String name = "Boss";
-
-    public enum CmdType {
-        BYE("bye", null),
-        LIST("list", null),
-        MARK("mark", null),
-        UNMARK("unmark", null),
-        TODO("todo", "T"),
-        DEADLINE("deadline", "D"),
-        EVENT("event", "E"),
-        DELETE("delete", null);
-
-        private final String commandName;
-        private final String shortCode;
-
-        CmdType(String commandName, String shortCode) {
-            this.commandName = commandName;
-            this.shortCode = shortCode;
-        }
-
-        /**
-         * Returns CmdType based on command passed by user.
-         *
-         * @param command string passed by user.
-         * @return CmdType
-         * @throws BossException If command type invalid
-         */
-        static CmdType fromString(String command) throws BossException {
-            for (CmdType cmd : CmdType.values()) {
-                if (Objects.equals(cmd.commandName, command)) {
-                    return cmd;
-                }
-            }
-            throw new BossException("Invalid command");
-        }
-
-        /**
-         * Returns CmdType based on short code of Task.
-         *
-         * @param code short code of task.
-         * @return long code of task
-         * @throws BossException If command type invalid
-         */
-        public static CmdType fromShortCode(String code) throws BossException {
-            for (CmdType cmd : CmdType.values()) {
-                if (Objects.equals(cmd.shortCode, code)) {
-                    return fromString(cmd.commandName);
-                }
-            }
-            throw new BossException("Invalid short code");
-        }
-    }
 
     public static void main(String[] args) {
         try {
@@ -84,10 +33,10 @@ public class Boss {
             try {
                 String input = scanner.nextLine();
                 String cmdString = input.split(" ")[0];
-                CmdType cmdType = CmdType.fromString(cmdString);
+                Commands command = Commands.fromString(cmdString);
                 String removeCmd = String.join("", input.split(cmdString)).trim();
 
-                switch (cmdType) {
+                switch (command) {
                     case BYE: {
                         Data.writeToFile(filePath, tasks); // update file with updated tasks
                         System.out.println("Bye. Hope to see you again soon!");
@@ -106,7 +55,7 @@ public class Boss {
                         break;
                     }
                     case TODO, DEADLINE, EVENT: {
-                        Task todoTask = Task.parseTask(cmdType, removeCmd);
+                        Task todoTask = Task.parseTask(command, removeCmd);
                         addTasks(todoTask);
                         break;
                     }
