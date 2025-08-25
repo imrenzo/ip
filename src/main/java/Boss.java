@@ -37,35 +37,20 @@ public class Boss {
                 String removeCmd = String.join("", input.split(cmdString)).trim();
 
                 switch (command) {
-                    case BYE: {
+                    case BYE -> {
                         Data.writeToFile(filePath, tasks); // update file with updated tasks
                         System.out.println("Bye. Hope to see you again soon!");
                         return;
                     }
-                    case LIST: {
-                        printTasks();
-                        break;
-                    }
-                    case MARK: {
-                        updateTaskStatus(removeCmd, true);
-                        break;
-                    }
-                    case UNMARK: {
-                        updateTaskStatus(removeCmd, false);
-                        break;
-                    }
-                    case TODO, DEADLINE, EVENT: {
+                    case LIST -> printTasks();
+                    case MARK -> updateTaskStatus(removeCmd, true);
+                    case UNMARK -> updateTaskStatus(removeCmd, false);
+                    case TODO, DEADLINE, EVENT -> {
                         Task todoTask = Task.parseTask(command, removeCmd);
                         addTasks(todoTask);
-                        break;
                     }
-                    case DELETE: {
-                        deleteTask(removeCmd);
-                        break;
-                    }
-                    default: {
-                        throw new BossException("Invalid command");
-                    }
+                    case DELETE -> deleteTask(removeCmd);
+                    default -> throw new BossException("Invalid command");
                 }
             } catch(FileNotFoundException e){
                     System.out.println("Error: Please create a boss.txt file under [project root]/data/boss.txt");

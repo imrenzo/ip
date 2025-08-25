@@ -50,17 +50,17 @@ public abstract class Task {
             throw new BossException("Please enter a description for a " + command + " task.");
         }
         switch (command) {
-            case TODO: {
+            case TODO -> {
                 return new ToDos(taskInfo);
             }
-            case DEADLINE: {
+            case DEADLINE -> {
                 String[] s = taskInfo.split("/by ", 2);
                 if (s.length < 2 || s[0].isBlank() || s[1].isBlank()) {
                     throw new BossException("Invalid format for deadline task.");
                 }
                 return new Deadlines(s[0], s[1]);
             }
-            case EVENT: {
+            case EVENT -> {
                 String[] s = taskInfo.split("/from ", 2);
                 if (s.length < 2 || s[0].isBlank() || s[1].isBlank()) {
                     throw new BossException("Invalid format for event task.");
@@ -74,8 +74,7 @@ public abstract class Task {
                 String toDate = dates[1].trim();
                 return new Events(description, fromDate, toDate);
             }
-            default:
-                throw new BossException("unrecognised cmd type: " + command);
+            default -> throw new BossException("unrecognised cmd type: " + command);
         }
     }
 
