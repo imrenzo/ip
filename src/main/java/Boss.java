@@ -67,15 +67,21 @@ public class Boss {
 
     public static void main(String[] args) {
         try {
-            // loads tasks saved on disk into tasks array
             tasks = Data.loadFileContents(filePath);
+        } catch (FileNotFoundException e) {
+            System.out.println("Error: Please create a boss.txt file under [project root]/data/boss.txt");
+            throw new RuntimeException(e.getMessage()); // allowed to exit
+        } catch (BossException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
 
-            Scanner scanner = new Scanner(System.in);
-            System.out.println("Hello! I'm " + name);
-            System.out.println("What can I do for you?");
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Hello! I'm " + name);
+        System.out.println("What can I do for you?");
 
-            // continuously loops to handle user commands
-            while (true) {
+        // continuously loops to handle user commands
+        while (true) {
+            try {
                 String input = scanner.nextLine();
                 String cmdString = input.split(" ")[0];
                 CmdType cmdType = CmdType.fromString(cmdString);
@@ -112,20 +118,20 @@ public class Boss {
                         throw new BossException("Invalid command");
                     }
                 }
+            } catch(FileNotFoundException e){
+                    System.out.println("Error: Please create a boss.txt file under [project root]/data/boss.txt");
+                    throw new RuntimeException(e.getMessage());
+            } catch(IOException e){
+                System.out.println("Error updating ./data/boss.txt: " + e.getMessage());
+            } catch(BossException e){
+                System.out.println("Error: " + e.getMessage());
+            } catch(NumberFormatException e){
+                System.out.println("Error: Please enter a proper number");
+            } catch(Exception e){
+                System.out.println("Unexpected error: " + e.getMessage());
             }
-        } catch (FileNotFoundException e) {
-            System.out.println("Error: Please create a boss.txt file under [project root]/data/boss.txt");
-            throw new RuntimeException(e.getMessage());
-        } catch (IOException e) {
-            System.out.println("Error updating ./data/boss.txt: " + e.getMessage());
-        } catch (BossException e) {
-            System.out.println("Error: " + e.getMessage());
-        } catch (NumberFormatException e) {
-            System.out.println("Error: Please enter a proper number");
-        } catch (Exception e) {
-            System.out.println("Unexpected error: " + e.getMessage());
         }
-    }
+        }
 
     /**
      * Deletes task from tasks array.
