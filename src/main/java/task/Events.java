@@ -1,12 +1,15 @@
+package task;
+
 /**
  * Events: tasks that start at a specific date/time and ends at a specific date/time.
  */
 public class Events extends Task{
     private final String fromDate;
     private final String toDate;
+    private static final String commandString = "event";
 
     public Events(String description, String fromDate, String toDate) {
-        super(description);
+        super(description, commandString);
         this.fromDate = fromDate;
         this.toDate = toDate;
     }

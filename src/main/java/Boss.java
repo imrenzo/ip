@@ -1,30 +1,85 @@
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Scanner;
+import task.Task;
+import bossexceptions.BossException;
 
 /**
  * Simulates a Personal Assistant Chatbot.
  */
 public class Boss {
-    private static final ArrayList<Task> tasks = new ArrayList<>();
+    private static ArrayList<Task> tasks;
+    private static final String filePath = "data/boss.txt";
+    private static final String name = "Boss";
 
-    private enum CmdType {
-        BYE, LIST, MARK, UNMARK, TODO, DEADLINE, EVENT, DELETE;
+    public enum CmdType {
+        BYE("bye", null),
+        LIST("list", null),
+        MARK("mark", null),
+        UNMARK("unmark", null),
+        TODO("todo", "T"),
+        DEADLINE("deadline", "D"),
+        EVENT("event", "E"),
+        DELETE("delete", null);
 
+        private final String commandName;
+        private final String shortCode;
+
+        CmdType(String commandName, String shortCode) {
+            this.commandName = commandName;
+            this.shortCode = shortCode;
+        }
+
+        /**
+         * Returns CmdType based on command passed by user.
+         *
+         * @param command string passed by user.
+         * @return CmdType
+         * @throws BossException If command type invalid
+         */
         private static CmdType fromString(String command) throws BossException {
-            try {
-                return CmdType.valueOf(command.toUpperCase());
-            } catch (IllegalArgumentException e) {
-                throw new BossException("Invalid command");
+            for (CmdType cmd : CmdType.values()) {
+                if (Objects.equals(cmd.commandName, command)) {
+                    return cmd;
+                }
             }
+            throw new BossException("Invalid command");
+        }
+
+        /**
+         * Converts short form of Task into their long code.
+         *
+         * @param code short code of task.
+         * @return long code of task
+         * @throws BossException If command type invalid
+         */
+        public static String shortCodeToLongCode(String code) throws BossException {
+            for (CmdType cmd : CmdType.values()) {
+                if (Objects.equals(cmd.shortCode, code)) {
+                    return cmd.commandName;
+                }
+            }
+            throw new BossException("Invalid short code");
         }
     }
 
     public static void main(String[] args) {
-        String name = "Boss";
+        try {
+            tasks = Data.loadFileContents(filePath);
+        } catch (FileNotFoundException e) {
+            System.out.println("Error: Please create a boss.txt file under [project root]/data/boss.txt");
+            throw new RuntimeException(e.getMessage()); // allowed to exit
+        } catch (BossException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+        Scanner scanner = new Scanner(System.in);
         System.out.println("Hello! I'm " + name);
         System.out.println("What can I do for you?");
 
-        Scanner scanner = new Scanner(System.in);
+        // continuously loops to handle user commands
         while (true) {
             try {
                 String input = scanner.nextLine();
@@ -34,6 +89,7 @@ public class Boss {
 
                 switch (cmdType) {
                     case BYE: {
+                        Data.writeToFile(filePath, tasks); // update file with updated tasks
                         System.out.println("Bye. Hope to see you again soon!");
                         return;
                     }
@@ -50,7 +106,7 @@ public class Boss {
                         break;
                     }
                     case TODO, DEADLINE, EVENT: {
-                        Task todoTask = parseTask(cmdString, removeCmd);
+                        Task todoTask = Task.parseTask(cmdString, removeCmd);
                         addTasks(todoTask);
                         break;
                     }
@@ -62,18 +118,23 @@ public class Boss {
                         throw new BossException("Invalid command");
                     }
                 }
-            } catch (BossException e) {
+            } catch(FileNotFoundException e){
+                    System.out.println("Error: Please create a boss.txt file under [project root]/data/boss.txt");
+                    throw new RuntimeException(e.getMessage());
+            } catch(IOException e){
+                System.out.println("Error updating ./data/boss.txt: " + e.getMessage());
+            } catch(BossException e){
                 System.out.println("Error: " + e.getMessage());
-            } catch (NumberFormatException e) {
+            } catch(NumberFormatException e){
                 System.out.println("Error: Please enter a proper number");
-            } catch (Exception e) {
+            } catch(Exception e){
                 System.out.println("Unexpected error: " + e.getMessage());
             }
         }
-    }
+        }
 
     /**
-     * Handles deletion of task from tasks array.
+     * Deletes task from tasks array.
      *
      * @param indexStr string format of index in tasks to remove element.
      * @throws BossException If index value < 0 or greater than tasks array size.
@@ -89,6 +150,7 @@ public class Boss {
     }
 
     /**
+     * Returns int value of indexStr
      * Validates that indexStr can be parsed as an int.
      * Validates that index can be found in tasks array.
      *
@@ -106,53 +168,11 @@ public class Boss {
     }
 
     /**
-     * Creates task based on the type of task user wants to create.
-     *
-     * @param cmdType type of task to create.
-     * @param taskInfo description and dates (if required) of task.
-     * @return Task task.
-     * @throws BossException If invalid format for parameters.
-     */
-    private static Task parseTask(String cmdType, String taskInfo) throws BossException {
-        if (taskInfo.isBlank()) {
-            throw new BossException("Please enter a description for a " + cmdType + " task.");
-        }
-        switch (cmdType) {
-            case "todo": {
-                return new ToDos(taskInfo);
-            }
-            case "deadline": {
-                String[] s = taskInfo.split("/by ", 2);
-                if (s.length < 2 || s[0].isBlank() || s[1].isBlank()) {
-                    throw new BossException("Invalid format for deadline task.");
-                }
-                return new Deadlines(s[0], s[1]);
-            }
-            case "event": {
-                String[] s = taskInfo.split("/from ", 2);
-                if (s.length < 2 || s[0].isBlank() || s[1].isBlank()) {
-                    throw new BossException("Invalid format for event task.");
-                }
-                String description = s[0];
-                String[] dates = s[1].split("/to", 2);
-                if (dates.length < 2 || dates[0].isBlank() || dates[1].isBlank()) {
-                    throw new BossException("Invalid format for start and end date/timings.");
-                }
-                String fromDate = dates[0].trim();
-                String toDate = dates[1].trim();
-                return new Events(description, fromDate, toDate);
-            }
-            default:
-                throw new BossException("unrecognised cmd type: " + cmdType);
-        }
-    }
-
-    /**
      * Adds a task to tasks array.
      *
      * @param task type of task to create.
      */
-    private static void addTasks(Task task) {
+    private static void addTasks(Task task) throws BossException {
         System.out.println("Got it. I've added this task:");
         tasks.add(task);
         System.out.println(task);

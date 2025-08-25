@@ -1,3 +1,5 @@
+package bossexceptions;
+
 /**
  * Thrown to indicate an error originating from methods in the Boss class.
  */
