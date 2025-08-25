@@ -7,12 +7,10 @@ import bossexceptions.BossException;
 public abstract class Task {
     private final String description;
     private boolean isDone;
-    private final String commandString;
     private final String commandCode;
 
     public Task(String description, String commandString) {
         this.description = description;
-        this.commandString = commandString;
         this.commandCode = String.valueOf(commandString.charAt(0)).toUpperCase();
         this.isDone = false;
     }
@@ -46,22 +44,22 @@ public abstract class Task {
      * @return Task task.
      * @throws BossException If invalid format for parameters.
      */
-    public static Task parseTask(String cmdType, String taskInfo) throws BossException {
+    public static Task parseTask(Boss.CmdType cmdType, String taskInfo) throws BossException {
         if (taskInfo.isBlank()) {
             throw new BossException("Please enter a description for a " + cmdType + " task.");
         }
         switch (cmdType) {
-            case "todo": {
+            case TODO: {
                 return new ToDos(taskInfo);
             }
-            case "deadline": {
+            case DEADLINE: {
                 String[] s = taskInfo.split("/by ", 2);
                 if (s.length < 2 || s[0].isBlank() || s[1].isBlank()) {
                     throw new BossException("Invalid format for deadline task.");
                 }
                 return new Deadlines(s[0], s[1]);
             }
-            case "event": {
+            case EVENT: {
                 String[] s = taskInfo.split("/from ", 2);
                 if (s.length < 2 || s[0].isBlank() || s[1].isBlank()) {
                     throw new BossException("Invalid format for event task.");
@@ -89,7 +87,7 @@ public abstract class Task {
      * @return Task task.
      * @throws BossException If invalid format for parameters.
      */
-    public static Task parseTask(String cmdType, boolean isDone, String taskInfo) throws BossException {
+    public static Task parseTask(Boss.CmdType cmdType, boolean isDone, String taskInfo) throws BossException {
         Task task = parseTask(cmdType, taskInfo);
         if (isDone) {
             task.setDone();

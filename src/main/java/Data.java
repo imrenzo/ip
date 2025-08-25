@@ -29,7 +29,7 @@ public class Data {
                 throw new BossException("Invalid format for task " + line + " in loaded file.");
             }
 
-            String taskType = Boss.CmdType.shortCodeToLongCode(taskStr[0].trim());
+            Boss.CmdType taskType = Boss.CmdType.fromShortCode(taskStr[0].trim());
             boolean isDone = Integer.parseInt(taskStr[1].trim()) == 1;
             String description = taskStr[2].trim();
             Task task = Task.parseTask(taskType, isDone, description);
@@ -43,7 +43,6 @@ public class Data {
      *
      * @param task Task
      * @return Suitable string format of task.
-     * @throws BossException If cmdType not found in enum
      */
     private static String convertTaskToString(Task task) {
         String taskStr = task.toString();

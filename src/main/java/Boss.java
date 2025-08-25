@@ -39,7 +39,7 @@ public class Boss {
          * @return CmdType
          * @throws BossException If command type invalid
          */
-        private static CmdType fromString(String command) throws BossException {
+        static CmdType fromString(String command) throws BossException {
             for (CmdType cmd : CmdType.values()) {
                 if (Objects.equals(cmd.commandName, command)) {
                     return cmd;
@@ -49,16 +49,16 @@ public class Boss {
         }
 
         /**
-         * Converts short form of Task into their long code.
+         * Returns CmdType based on short code of Task.
          *
          * @param code short code of task.
          * @return long code of task
          * @throws BossException If command type invalid
          */
-        public static String shortCodeToLongCode(String code) throws BossException {
+        public static CmdType fromShortCode(String code) throws BossException {
             for (CmdType cmd : CmdType.values()) {
                 if (Objects.equals(cmd.shortCode, code)) {
-                    return cmd.commandName;
+                    return fromString(cmd.commandName);
                 }
             }
             throw new BossException("Invalid short code");
@@ -106,7 +106,7 @@ public class Boss {
                         break;
                     }
                     case TODO, DEADLINE, EVENT: {
-                        Task todoTask = Task.parseTask(cmdString, removeCmd);
+                        Task todoTask = Task.parseTask(cmdType, removeCmd);
                         addTasks(todoTask);
                         break;
                     }
