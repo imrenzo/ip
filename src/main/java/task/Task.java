@@ -4,6 +4,7 @@ import bossexceptions.BossException;
 import commands.CommandsEnum;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 /**
  * Contains information a task needs to have.
@@ -70,13 +71,18 @@ public abstract class Task {
                 }
 
                 String time = dateAndTimeSplit[1].trim();
-                // Date format string is in dd-MM-yyyy
-                // However task print out in yyyy-MM-dd
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-                LocalDate date =  LocalDate.parse(
-                        dateAndTimeSplit[0].replace("/", "-")
-                                .trim(), formatter);
-                return new Deadlines(description, date, time);
+
+                try {
+                    // Date format string is in dd-MM-yyyy
+                    // However task print out in yyyy-MM-dd
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                    LocalDate date =  LocalDate.parse(
+                            dateAndTimeSplit[0].replace("/", "-")
+                                    .trim(), formatter);
+                    return new Deadlines(description, date, time);
+                } catch (DateTimeParseException e) {
+                    throw new BossException("Invalid format for date and time.");
+                }
             }
             case EVENT -> {
                 String[] s = taskInfo.split("/from ", 2);
