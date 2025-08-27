@@ -6,7 +6,7 @@ import bossexceptions.BossException;
 import task.TaskList;
 
 public abstract class Command {
-    private boolean isExit;
+    private final boolean isExit;
 
     public Command(boolean isExit) {
         this.isExit = isExit;
@@ -16,9 +16,5 @@ public abstract class Command {
 
     public boolean getExit() {
         return this.isExit;
-    }
-
-    public void exitProgram() {
-        this.isExit = true;
     }
 }

@@ -46,7 +46,7 @@ public class TaskList {
     }
 
     public ArrayList<Task> list() {
-        return this.tasks;
+        return new ArrayList<>(this.tasks);
     }
 
     public void printAllTasks() {
