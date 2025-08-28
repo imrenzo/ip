@@ -12,9 +12,13 @@ public class ListCommand extends Command {
     }
 
     /**
-     * Prints all elements in tasks array, adhering to a format.
+     * Prints all elements in tasks array to the terminal.
+     *
+     * @param tasks TaskList containing all tasks.
+     * @param ui Ui instance of bot to display messages to the user.
+     * @param storage The storage instance used by bot.
      */
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws BossException {
+    public void execute(TaskList tasks, Ui ui, Storage storage) {
         ui.displayMessage("Here are the tasks in your list:");
         tasks.printAllTasks();
     }

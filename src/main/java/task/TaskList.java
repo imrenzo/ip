@@ -49,6 +49,9 @@ public class TaskList {
         return new ArrayList<>(this.tasks);
     }
 
+    /**
+     * Prints all tasks in TaskList.
+     */
     public void printAllTasks() {
         if (tasks.isEmpty()) {
             System.out.println("No tasks created");

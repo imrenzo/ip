@@ -8,6 +8,13 @@ import commands.task.ExitCommand;
 import commands.task.MarkCommand;
 
 public class Parser {
+    /**
+     * Generates Command based user input.
+     *
+     * @param input String user inputs in command line.
+     * @return Command instance based on user input.
+     * @throws BossException If command user provides is invalid.
+     */
     public static Command parse(String input) throws BossException {
         String cmdString = input.split(" ")[0];
         CommandsEnum command = CommandsEnum.fromString(cmdString);

@@ -16,9 +16,12 @@ public class DeleteCommand extends Command {
     }
 
     /**
-     * Deletes task from tasks array.
+     * Remove a task from TaskList.
+     * Task obtained from indexStr position in TaskList.
      *
-     * @param ui string format of index in tasks to remove element.
+     * @param tasks TaskList containing all tasks.
+     * @param ui Ui instance of bot to display messages to the user.
+     * @param storage The storage instance used by bot.
      */
     public void execute(TaskList tasks, Ui ui, Storage storage) throws BossException {
         int index = tasks.validateTasksIndex(indexStr);

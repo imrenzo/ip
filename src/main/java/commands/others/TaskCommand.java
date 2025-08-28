@@ -18,8 +18,18 @@ public class TaskCommand extends Command {
         this.taskInfo = taskInfo;
     }
 
+    /**
+     * Adds a Task instance into TaskList.
+     *
+     * @param tasks TaskList containing all tasks.
+     * @param ui Ui instance of bot to display messages to the user.
+     * @param storage The storage instance used by bot.
+     */
     public void execute(TaskList tasks, Ui ui, Storage storage) throws BossException {
+        // Generate a child class object from Task type.
         Task task = Task.parseTask(command, taskInfo);
+
+        // Add children instance object to list of tasks.
         tasks.add(task);
         ui.displayMessage("Got it. I've added this task:");
         ui.displayMessage(task.toString());

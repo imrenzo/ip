@@ -22,9 +22,11 @@ public class Storage {
     }
 
     /**
-     * Loads all task into a Task array from txt file.
+     * Loads all task into a Task array from txt file in filePath.
      *
-     * @return Task array.
+     * @return Task array containing tasks from filePath.
+     * @throws BossException If txt in file has an invalid format.
+     * @throws BossException If file specified in filePath does not exist.
      */
     public ArrayList<Task> loadFileContents() throws BossException {
         ArrayList<Task> tasks = new ArrayList<>();
@@ -52,10 +54,10 @@ public class Storage {
     }
 
     /**
-     * Converts task to a suitable string to add into task file
+     * Converts task to a format string to add into task file.
      *
-     * @param task Task
-     * @return Suitable string format of task.
+     * @param task Task to be converted to a string.
+     * @return Formatted string of task for task file.
      */
     private String convertTaskToString(Task task) {
         String taskStr = task.toString();
@@ -67,9 +69,10 @@ public class Storage {
     }
 
     /**
-     * Iterates though tasks array and writes tasks into file
+     * Iterates though TaskList and writes all tasks into file.
      *
      * @param tasks array of tasks to add to file.
+     * @throws BossException If IOException thrown by FileWriter object.
      */
     public void writeToFile(TaskList tasks) throws BossException {
         try {

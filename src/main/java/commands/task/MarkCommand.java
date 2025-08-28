@@ -18,7 +18,12 @@ public class MarkCommand extends Command {
     }
 
     /**
-     * Creates task based on the type of task user wants to create.
+     * Updates Task's status in TaskList.
+     * Task obtained from indexStr position in TaskList.
+     *
+     * @param tasks TaskList containing all tasks.
+     * @param ui Ui instance of bot to display messages to the user.
+     * @param storage The storage instance used by bot.
      */
     public void execute(TaskList tasks, Ui ui, Storage storage) throws BossException {
         int index = tasks.validateTasksIndex(indexStr);
