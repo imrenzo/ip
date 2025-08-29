@@ -4,18 +4,21 @@ package task;
  * Events: tasks that start at a specific date/time and ends at a specific date/time.
  */
 public class Events extends Task{
-    private final String fromDate;
-    private final String toDate;
-    private static final String commandString = "event";
+    private final String FROM_DATE;
+    private final String TO_DATE;
+    private static final String COMMAND_STRING = "event";
 
+    /**
+     * Initialises fields of class and parent class instances.
+     */
     public Events(String description, String fromDate, String toDate) {
-        super(description, commandString);
-        this.fromDate = fromDate;
-        this.toDate = toDate;
+        super(description, COMMAND_STRING);
+        this.FROM_DATE = fromDate;
+        this.TO_DATE = toDate;
     }
 
     @Override
     public String toString() {
-        return "[E]" + super.toString() + "(from: " + this.fromDate + " to: " + this.toDate + ")";
+        return "[E]" + super.toString() + "(from: " + this.FROM_DATE + " to: " + this.TO_DATE + ")";
     }
 }

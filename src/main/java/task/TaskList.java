@@ -4,10 +4,13 @@ import bossexceptions.BossException;
 import java.util.ArrayList;
 
 public class TaskList {
-    private final ArrayList<Task> tasks;
+    private final ArrayList<Task> TASKS;
 
+    /**
+     * Sets the single TaskList contained in program instance.
+     */
     public TaskList(ArrayList<Task> tasks) {
-        this.tasks = tasks;
+        this.TASKS = tasks;
     }
 
     /**
@@ -23,38 +26,41 @@ public class TaskList {
      */
     public int validateTasksIndex(String indexStr) throws BossException, NumberFormatException {
         int index = Integer.parseInt(indexStr) - 1;
-        if (index >= this.tasks.size() || index < 0) {
+        if (index >= this.TASKS.size() || index < 0) {
             throw new BossException("Invalid index number");
         }
         return index;
     }
 
     public Task get(int index) {
-        return this.tasks.get(index);
+        return this.TASKS.get(index);
     }
 
     public void add(Task task) {
-        tasks.add(task);
+        TASKS.add(task);
     }
 
     public void remove(int index) {
-        this.tasks.remove(index);
+        this.TASKS.remove(index);
     }
 
     public int taskSize() {
-        return tasks.size();
+        return TASKS.size();
     }
 
     public ArrayList<Task> list() {
-        return new ArrayList<>(this.tasks);
+        return new ArrayList<>(this.TASKS);
     }
 
+    /**
+     * Display all tasks in TaskList for user.
+     */
     public void printAllTasks() {
-        if (tasks.isEmpty()) {
+        if (TASKS.isEmpty()) {
             System.out.println("No tasks created");
         }
-        for (int i = 0; i < tasks.size(); i++) {
-            System.out.println((i + 1) + ": " + tasks.get(i));
+        for (int i = 0; i < TASKS.size(); i++) {
+            System.out.println((i + 1) + ": " + TASKS.get(i));
         }
     }
 }
