@@ -2,6 +2,7 @@ package task;
 
 import bossexceptions.BossException;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class TaskList {
     private final ArrayList<Task> tasks;
@@ -49,12 +50,25 @@ public class TaskList {
         return new ArrayList<>(this.tasks);
     }
 
-    public void printAllTasks() {
-        if (tasks.isEmpty()) {
-            System.out.println("No tasks created");
+    /**
+     * Prints tasks based on task description that user wants to see.
+     * Passing empty string to description prints all tasks.
+     *
+     * @param description Description that user wants to see from TASKS.
+     */
+    public void printAllTasks(String description) {
+        ArrayList<Task> tmpTasks = this.tasks;
+        if (!description.isBlank()) {
+            tmpTasks = tmpTasks
+                    .stream()
+                    .filter(task -> task.containsDecription(description))
+                    .collect(Collectors.toCollection(ArrayList::new));
         }
-        for (int i = 0; i < tasks.size(); i++) {
-            System.out.println((i + 1) + ": " + tasks.get(i));
+        if (tmpTasks.isEmpty()) {
+            System.out.println("No tasks found");
+        }
+        for (int i = 0; i < tmpTasks.size(); i++) {
+            System.out.println((i + 1) + ": " + tmpTasks.get(i));
         }
     }
 }

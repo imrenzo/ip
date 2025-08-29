@@ -10,7 +10,8 @@ public enum CommandsEnum {
     TODO("todo", "T"),
     DEADLINE("deadline", "D"),
     EVENT("event", "E"),
-    DELETE("delete", null);
+    DELETE("delete", null),
+    FIND("find", null);
 
     private final String commandName;
     private final String shortCode;

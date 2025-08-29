@@ -118,4 +118,13 @@ public abstract class Task {
         }
         return task;
     }
+
+    /**
+     * Checks if task DESCRIPTION contains description
+     * @param description Description method caller wants to find
+     * @return boolean
+     */
+    public boolean containsDecription(String description) {
+        return this.description.contains(description);
+    }
 }

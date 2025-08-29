@@ -16,6 +16,6 @@ public class ListCommand extends Command {
      */
     public void execute(TaskList tasks, Ui ui, Storage storage) throws BossException {
         ui.displayMessage("Here are the tasks in your list:");
-        tasks.printAllTasks();
+        tasks.printAllTasks("");
     }
 }
