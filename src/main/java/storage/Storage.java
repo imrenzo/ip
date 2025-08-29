@@ -15,20 +15,27 @@ import task.TaskList;
  * Contains methods to handle manipulation of txt file containing list of tasks.
  */
 public class Storage {
-    private final String filePath;
+    private final String FILE_PATH;
 
+    /**
+     * Sets file location in class instance.
+     *
+     * @param filePath File location of text file.
+     */
     public Storage(String filePath) {
-        this.filePath = filePath;
+        this.FILE_PATH = filePath;
     }
 
     /**
      * Loads all task into a Task array from txt file.
      *
      * @return Task array.
+     * @throws BossException If text in file has invalid format.
+     * @throws BossException If file is not found.
      */
     public ArrayList<Task> loadFileContents() throws BossException {
         ArrayList<Task> tasks = new ArrayList<>();
-        File f = new File(this.filePath);
+        File f = new File(this.FILE_PATH);
         try {
             Scanner s = new Scanner(f);
 
@@ -73,7 +80,7 @@ public class Storage {
      */
     public void writeToFile(TaskList tasks) throws BossException {
         try {
-            FileWriter fw = new FileWriter(this.filePath);
+            FileWriter fw = new FileWriter(this.FILE_PATH);
             for (Task task : tasks.list()) {
                 String taskToString = convertTaskToString(task);
                 fw.write(taskToString);

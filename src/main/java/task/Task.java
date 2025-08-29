@@ -10,13 +10,16 @@ import java.time.format.DateTimeParseException;
  * Contains information a task needs to have.
  */
 public abstract class Task {
-    private final String description;
+    private final String DESCRIPTION;
     private boolean isDone;
-    private final String commandCode;
+    private final String COMMAND_CODE;
 
+    /**
+     * Initialises fields of class.
+     */
     public Task(String description, String commandString) {
-        this.description = description;
-        this.commandCode = String.valueOf(commandString.charAt(0)).toUpperCase();
+        this.DESCRIPTION = description;
+        this.COMMAND_CODE = String.valueOf(commandString.charAt(0)).toUpperCase();
         this.isDone = false;
     }
 
@@ -33,12 +36,12 @@ public abstract class Task {
     }
 
     public String getCommandCode() {
-        return this.commandCode;
+        return this.COMMAND_CODE;
     }
 
     @Override
     public String toString() {
-        return "[" + getStatusIcon() + "]" + " " + description;
+        return "[" + getStatusIcon() + "]" + " " + DESCRIPTION;
     }
 
     /**
@@ -125,6 +128,6 @@ public abstract class Task {
      * @return boolean
      */
     public boolean containsDecription(String description) {
-        return this.description.contains(description);
+        return this.DESCRIPTION.contains(description);
     }
 }

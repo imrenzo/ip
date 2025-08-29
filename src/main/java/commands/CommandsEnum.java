@@ -2,6 +2,9 @@ package commands;
 import bossexceptions.BossException;
 import java.util.Objects;
 
+/**
+ * Contains methods that bot is able to perform.
+ */
 public enum CommandsEnum {
     BYE("bye", null),
     LIST("list", null),
@@ -13,12 +16,15 @@ public enum CommandsEnum {
     DELETE("delete", null),
     FIND("find", null);
 
-    private final String commandName;
-    private final String shortCode;
+    private final String COMMAND_NAME;
+    private final String SHORT_CODE;
 
+    /**
+     * Contains methods that bot is able to perform.
+     */
     CommandsEnum(String commandName, String shortCode) {
-        this.commandName = commandName;
-        this.shortCode = shortCode;
+        this.COMMAND_NAME = commandName;
+        this.SHORT_CODE = shortCode;
     }
 
     /**
@@ -30,7 +36,7 @@ public enum CommandsEnum {
      */
     public static CommandsEnum fromString(String command) throws BossException {
         for (CommandsEnum cmd : CommandsEnum.values()) {
-            if (Objects.equals(cmd.commandName, command)) {
+            if (Objects.equals(cmd.COMMAND_NAME, command)) {
                 return cmd;
             }
         }
@@ -46,8 +52,8 @@ public enum CommandsEnum {
      */
     public static CommandsEnum fromShortCode(String code) throws BossException {
         for (CommandsEnum cmd : CommandsEnum.values()) {
-            if (Objects.equals(cmd.shortCode, code)) {
-                return fromString(cmd.commandName);
+            if (Objects.equals(cmd.SHORT_CODE, code)) {
+                return fromString(cmd.COMMAND_NAME);
             }
         }
         throw new BossException("Invalid short code");

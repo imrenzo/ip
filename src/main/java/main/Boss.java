@@ -1,3 +1,5 @@
+package main;
+
 import storage.Storage;
 import ui.Ui;
 import commands.Command;
@@ -9,42 +11,50 @@ import task.TaskList;
  * Simulates a Personal Assistant Chatbot.
  */
 public class Boss {
-    private final Storage storage;
+    private final Storage STORAGE;
     private TaskList tasks;
-    private final Ui ui;
+    private final Ui UI;
 
+    /**
+     * Reads file and updates tasks with file contents.
+     *
+     * @param filePath file containing task strings.
+     */
     private Boss(String filePath) {
-        ui = new Ui();
-        storage = new Storage(filePath);
+        UI = new Ui();
+        STORAGE = new Storage(filePath);
         try {
-            tasks = new TaskList(storage.loadFileContents());
+            tasks = new TaskList(STORAGE.loadFileContents());
         } catch (BossException e) {
-            ui.showError("Error: " + e.getMessage());
+            UI.showError(e.getMessage());
         }
     }
 
+    /**
+     * Runs the program.
+     */
     private void run() {
-        ui.showWelcome();
+        UI.showWelcome();
         boolean isExit = false;
 
         // continuously loops to handle user commands
         while (!isExit) {
             try {
-                String fullCommand = ui.readCommand();
-//                ui.showLine();
+                String fullCommand = UI.readCommand();
+//                UI.showLine();
                 Command c = Parser.parse(fullCommand);
-                c.execute(tasks, ui, storage);
+                c.execute(tasks, UI, STORAGE);
                 isExit = c.getExit();
-//                ui.showLine();
+//                UI.showLine();
             } catch(BossException e){
-                ui.showError("Error: " + e.getMessage());
+                UI.showError("Error: " + e.getMessage());
             } catch(NumberFormatException e){
-                ui.showError("Error: Please enter a proper number");
+                UI.showError("Error: Please enter a proper number");
             } catch(Exception e){
-                ui.showError("Unexpected error: " + e.getMessage());
+                UI.showError("Unexpected error: " + e.getMessage());
             }
         }
-        ui.exit();
+        UI.exit();
     }
 
     public static void main(String[] args) {

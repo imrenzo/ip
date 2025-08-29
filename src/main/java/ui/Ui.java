@@ -3,15 +3,15 @@ package ui;
 import java.util.Scanner;
 
 public class Ui {
-    private static final String name = "Boss";
-    private Scanner scanner;
+    private static final String NAME = "Boss";
+    private final Scanner SCANNER;
 
     public Ui() {
-        this.scanner = new Scanner(System.in);
+        this.SCANNER = new Scanner(System.in);
     }
 
     public void showWelcome() {
-        System.out.println("Hello! I'm " + name);
+        System.out.println("Hello! I'm " + NAME);
         System.out.println("What can I do for you?");
     }
 
@@ -20,7 +20,7 @@ public class Ui {
     }
 
     public String readCommand() {
-        return scanner.nextLine();
+        return SCANNER.nextLine();
     }
 
     public void displayMessage(String message) {

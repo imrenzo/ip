@@ -18,6 +18,9 @@ public class TaskCommand extends Command {
         this.taskInfo = taskInfo;
     }
 
+    /**
+     * Adds task to TaskList.
+     */
     public void execute(TaskList tasks, Ui ui, Storage storage) throws BossException {
         Task task = Task.parseTask(command, taskInfo);
         tasks.add(task);

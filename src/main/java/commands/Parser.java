@@ -8,7 +8,16 @@ import commands.task.DeleteCommand;
 import commands.task.ExitCommand;
 import commands.task.MarkCommand;
 
+/**
+ * Creates a command based on user input.
+ */
 public class Parser {
+    /**
+     *
+     * @param input Input string from user containing full instruction.
+     * @return Command based on the first word in input.
+     * @throws BossException If command given is invalid.
+     */
     public static Command parse(String input) throws BossException {
         String cmdString = input.split(" ")[0];
         CommandsEnum command = CommandsEnum.fromString(cmdString);
