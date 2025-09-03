@@ -61,7 +61,7 @@ public class TaskList {
         if (!description.isBlank()) {
             tmpTasks = tmpTasks
                     .stream()
-                    .filter(task -> task.containsDecription(description))
+                    .filter(task -> task.containsDescription(description))
                     .collect(Collectors.toCollection(ArrayList::new));
         }
         if (tmpTasks.isEmpty()) {

@@ -17,10 +17,10 @@ public abstract class Task {
     /**
      * Initialises fields of class.
      */
-    public Task(String description, String commandString) {
+    public Task(String description, String commandCode) {
         this.DESCRIPTION = description;
-        this.COMMAND_CODE = String.valueOf(commandString.charAt(0)).toUpperCase();
         this.isDone = false;
+        this.COMMAND_CODE = commandCode;
     }
 
     public void setDone() {
@@ -33,10 +33,6 @@ public abstract class Task {
 
     public String getStatusIcon() {
         return (isDone ? "X" : " "); // mark done task with X
-    }
-
-    public String getCommandCode() {
-        return this.COMMAND_CODE;
     }
 
     @Override
@@ -127,7 +123,22 @@ public abstract class Task {
      * @param description Description method caller wants to find
      * @return boolean
      */
-    public boolean containsDecription(String description) {
+    public boolean containsDescription(String description) {
         return this.DESCRIPTION.contains(description);
+    }
+
+
+    /**
+     * Generates a suitable string of task to add into file
+     *
+     * @return Suitable string format of task.
+     */
+    public String getFileString() {
+        String description = this.DESCRIPTION.trim();
+        String isDone = this.isDone ? "1" : "0";
+        String cmdType = this.COMMAND_CODE;
+        String[] arr = {cmdType, isDone, description};
+        return String.join(" | ", arr) + "\n";
+
     }
 }

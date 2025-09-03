@@ -59,21 +59,6 @@ public class Storage {
     }
 
     /**
-     * Converts task to a suitable string to add into task file
-     *
-     * @param task Task
-     * @return Suitable string format of task.
-     */
-    private String convertTaskToString(Task task) {
-        String taskStr = task.toString();
-        String description = taskStr.substring(6).trim();
-        String isDone = taskStr.charAt(4) == 'X' ? "1" : "0";
-        String cmdType = task.getCommandCode();
-        String[] arr = {cmdType, isDone, description};
-        return String.join(" | ", arr) + "\n";
-    }
-
-    /**
      * Iterates though tasks array and writes tasks into file
      *
      * @param tasks array of tasks to add to file.
@@ -82,8 +67,7 @@ public class Storage {
         try {
             FileWriter fw = new FileWriter(this.FILE_PATH);
             for (Task task : tasks.list()) {
-                String taskToString = convertTaskToString(task);
-                fw.write(taskToString);
+                fw.write(task.getFileString());
             }
             fw.close();
         } catch (IOException e) {

@@ -8,13 +8,13 @@ import java.time.LocalDate;
 public class Deadlines extends Task{
     private final LocalDate DATE;
     private final String TIME;
-    private static final String COMMAND_STRING = "deadline";
+    private static final String COMMAND_CODE = "D";
 
     /**
      * Initialises fields of class and parent class instances.
      */
     public Deadlines(String description, LocalDate date, String time) {
-        super(description, COMMAND_STRING);
+        super(description, COMMAND_CODE);
         this.DATE = date;
         this.TIME = time;
     }
@@ -22,6 +22,6 @@ public class Deadlines extends Task{
     @Override
     public String toString() {
         // date printed out in yyyy-MM-dd format
-        return "[D]" + super.toString() + " (by: " + this.DATE + " " + this.TIME + ")";
+        return "[" + COMMAND_CODE + "]" + super.toString() + " (by: " + this.DATE + " " + this.TIME + ")";
     }
 }
