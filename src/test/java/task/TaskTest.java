@@ -1,10 +1,10 @@
 package task;
 
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
 import bossexceptions.BossException;
 import commands.CommandsEnum;
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 public class TaskTest {
     @Test

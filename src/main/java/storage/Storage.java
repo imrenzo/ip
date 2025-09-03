@@ -3,19 +3,22 @@ package storage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.io.FileWriter;
+
+import bossexceptions.BossException;
 import commands.CommandsEnum;
 import task.Task;
-import bossexceptions.BossException;
 import task.TaskList;
 
 /**
  * Contains methods to handle manipulation of txt file containing list of tasks.
  */
 public class Storage {
+    // CHECKSTYLE.OFF: AbbreviationAsWordInName
     private final String FILE_PATH;
+    // CHECKSTYLE.ON: AbbreviationAsWordInName
 
     /**
      * Sets file location in class instance.

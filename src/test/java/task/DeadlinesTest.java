@@ -1,10 +1,10 @@
 package task;
 
-import bossexceptions.BossException;
-import commands.CommandsEnum;
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import bossexceptions.BossException;
+import commands.CommandsEnum;
 
 public class DeadlinesTest {
     @Test

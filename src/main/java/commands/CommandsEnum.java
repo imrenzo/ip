@@ -1,6 +1,8 @@
 package commands;
-import bossexceptions.BossException;
+
 import java.util.Objects;
+
+import bossexceptions.BossException;
 
 /**
  * Contains methods that bot is able to perform.
@@ -16,9 +18,10 @@ public enum CommandsEnum {
     DELETE("delete", null),
     FIND("find", null);
 
+    // CHECKSTYLE.OFF: AbbreviationAsWordInName
     private final String COMMAND_NAME;
     private final String SHORT_CODE;
-
+    // CHECKSTYLE.ON: AbbreviationAsWordInName
     /**
      * Contains methods that bot is able to perform.
      */

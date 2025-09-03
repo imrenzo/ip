@@ -1,18 +1,21 @@
 package task;
 
-import bossexceptions.BossException;
-import commands.CommandsEnum;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+
+import bossexceptions.BossException;
+import commands.CommandsEnum;
 
 /**
  * Contains information a task needs to have.
  */
 public abstract class Task {
+    // CHECKSTYLE.OFF: AbbreviationAsWordInName
     private final String DESCRIPTION;
     private boolean isDone;
     private final String COMMAND_CODE;
+    // CHECKSTYLE.ON: AbbreviationAsWordInName
 
     /**
      * Initialises fields of class.
@@ -53,51 +56,51 @@ public abstract class Task {
             throw new BossException("Please enter a description for a " + command + " task.");
         }
         switch (command) {
-            case TODO -> {
-                return new ToDos(taskInfo);
+        case TODO -> {
+            return new ToDos(taskInfo);
+        }
+        case DEADLINE -> {
+            String[] s = taskInfo.split("/by ", 2);
+            if (s.length < 2 || s[0].isBlank() || s[1].isBlank()) {
+                throw new BossException("Invalid format for deadline task.");
             }
-            case DEADLINE -> {
-                String[] s = taskInfo.split("/by ", 2);
-                if (s.length < 2 || s[0].isBlank() || s[1].isBlank()) {
-                    throw new BossException("Invalid format for deadline task.");
-                }
-                String description = s[0].trim();
-                String dateAndTime = s[1].trim();
+            String description = s[0].trim();
+            String dateAndTime = s[1].trim();
 
-                String[] dateAndTimeSplit = dateAndTime.split(" ");
-                if (dateAndTimeSplit.length < 2 || dateAndTimeSplit[0].isBlank() || dateAndTimeSplit[1].isBlank()) {
-                    throw new BossException("Invalid format for date and time.");
-                }
-
-                String time = dateAndTimeSplit[1].trim();
-
-                try {
-                    // Date format string is in dd-MM-yyyy
-                    // However task print out in yyyy-MM-dd
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-                    LocalDate date =  LocalDate.parse(
-                            dateAndTimeSplit[0].replace("/", "-")
-                                    .trim(), formatter);
-                    return new Deadlines(description, date, time);
-                } catch (DateTimeParseException e) {
-                    throw new BossException("Invalid format for date and time.");
-                }
+            String[] dateAndTimeSplit = dateAndTime.split(" ");
+            if (dateAndTimeSplit.length < 2 || dateAndTimeSplit[0].isBlank() || dateAndTimeSplit[1].isBlank()) {
+                throw new BossException("Invalid format for date and time.");
             }
-            case EVENT -> {
-                String[] s = taskInfo.split("/from ", 2);
-                if (s.length < 2 || s[0].isBlank() || s[1].isBlank()) {
-                    throw new BossException("Invalid format for event task.");
-                }
-                String description = s[0];
-                String[] dates = s[1].split("/to", 2);
-                if (dates.length < 2 || dates[0].isBlank() || dates[1].isBlank()) {
-                    throw new BossException("Invalid format for start and end date/timings.");
-                }
-                String fromDate = dates[0].trim();
-                String toDate = dates[1].trim();
-                return new Events(description, fromDate, toDate);
+
+            String time = dateAndTimeSplit[1].trim();
+
+            try {
+                // Date format string is in dd-MM-yyyy
+                // However task print out in yyyy-MM-dd
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                LocalDate date = LocalDate.parse(
+                        dateAndTimeSplit[0].replace("/", "-")
+                                .trim(), formatter);
+                return new Deadlines(description, date, time);
+            } catch (DateTimeParseException e) {
+                throw new BossException("Invalid format for date and time.");
             }
-            default -> throw new BossException("unrecognised cmd type: " + command);
+        }
+        case EVENT -> {
+            String[] s = taskInfo.split("/from ", 2);
+            if (s.length < 2 || s[0].isBlank() || s[1].isBlank()) {
+                throw new BossException("Invalid format for event task.");
+            }
+            String description = s[0];
+            String[] dates = s[1].split("/to", 2);
+            if (dates.length < 2 || dates[0].isBlank() || dates[1].isBlank()) {
+                throw new BossException("Invalid format for start and end date/timings.");
+            }
+            String fromDate = dates[0].trim();
+            String toDate = dates[1].trim();
+            return new Events(description, fromDate, toDate);
+        }
+        default -> throw new BossException("unrecognised cmd type: " + command);
         }
     }
 

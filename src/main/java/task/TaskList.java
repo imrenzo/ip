@@ -1,11 +1,17 @@
 package task;
 
-import bossexceptions.BossException;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
+import bossexceptions.BossException;
+
+/**
+ * Contains all the tasks in bot
+ */
 public class TaskList {
+    // CHECKSTYLE.OFF: AbbreviationAsWordInName
     private final ArrayList<Task> tasks;
+    // CHECKSTYLE.ON: AbbreviationAsWordInName
 
     public TaskList(ArrayList<Task> tasks) {
         this.tasks = tasks;

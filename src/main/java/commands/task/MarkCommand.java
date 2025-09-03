@@ -1,16 +1,25 @@
 package commands.task;
 
+import bossexceptions.BossException;
 import commands.Command;
 import storage.Storage;
-import ui.Ui;
-import bossexceptions.BossException;
 import task.Task;
 import task.TaskList;
+import ui.Ui;
 
+/**
+ * Command to mark whether task is done or not
+ */
 public class MarkCommand extends Command {
     private final boolean isDone;
     private final String indexStr;
 
+    /**
+     * Marks task status
+     *
+     * @param indexStr index of task to mark in TaskList
+     * @param isDone task is done: true, task is not done: false
+     */
     public MarkCommand(String indexStr, boolean isDone) {
         super(false);
         this.isDone = isDone;

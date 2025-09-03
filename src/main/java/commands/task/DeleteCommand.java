@@ -1,15 +1,23 @@
 package commands.task;
 
+import bossexceptions.BossException;
 import commands.Command;
 import storage.Storage;
-import ui.Ui;
-import bossexceptions.BossException;
 import task.Task;
 import task.TaskList;
+import ui.Ui;
 
+/**
+ * Command to delete a Task
+ */
 public class DeleteCommand extends Command {
     private final String indexStr;
 
+    /**
+     * Instantiates deleting a specific task
+     *
+     * @param indexStr index of task to delete in TaskList
+     */
     public DeleteCommand(String indexStr) {
         super(false);
         this.indexStr = indexStr;

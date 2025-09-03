@@ -1,11 +1,14 @@
 package commands.others;
 
+import bossexceptions.BossException;
 import commands.Command;
 import storage.Storage;
-import ui.Ui;
-import bossexceptions.BossException;
 import task.TaskList;
+import ui.Ui;
 
+/**
+ * List all tasks created by user.
+ */
 public class ListCommand extends Command {
     /**
      * Sets isExit as false in Command task.

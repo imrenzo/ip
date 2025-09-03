@@ -5,10 +5,12 @@ import java.time.LocalDate;
 /**
  * Deadlines: tasks that need to be done before a specific date/time e.g., submit report by 11/10/2019 5pm
  */
-public class Deadlines extends Task{
+public class Deadlines extends Task {
+    // CHECKSTYLE.OFF: AbbreviationAsWordInName
+    private static final String COMMAND_CODE = "D";
     private final LocalDate DATE;
     private final String TIME;
-    private static final String COMMAND_CODE = "D";
+    // CHECKSTYLE.ON: AbbreviationAsWordInName
 
     /**
      * Initialises fields of class and parent class instances.

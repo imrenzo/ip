@@ -1,19 +1,21 @@
 package main;
 
-import storage.Storage;
-import ui.Ui;
+import bossexceptions.BossException;
 import commands.Command;
 import commands.Parser;
-import bossexceptions.BossException;
+import storage.Storage;
 import task.TaskList;
+import ui.Ui;
 
 /**
  * Simulates a Personal Assistant Chatbot.
  */
 public class Boss {
+    // CHECKSTYLE.OFF: AbbreviationAsWordInName
     private final Storage STORAGE;
     private TaskList tasks;
     private final Ui UI;
+    // CHECKSTYLE.ON: AbbreviationAsWordInName
 
     /**
      * Reads file and updates tasks with file contents.
@@ -41,16 +43,16 @@ public class Boss {
         while (!isExit) {
             try {
                 String fullCommand = UI.readCommand();
-//                UI.showLine();
+                // UI.showLine();
                 Command c = Parser.parse(fullCommand);
                 c.execute(tasks, UI, STORAGE);
                 isExit = c.getExit();
-//                UI.showLine();
-            } catch(BossException e){
+                // UI.showLine();
+            } catch (BossException e) {
                 UI.showError("Error: " + e.getMessage());
-            } catch(NumberFormatException e){
+            } catch (NumberFormatException e) {
                 UI.showError("Error: Please enter a proper number");
-            } catch(Exception e){
+            } catch (Exception e) {
                 UI.showError("Unexpected error: " + e.getMessage());
             }
         }

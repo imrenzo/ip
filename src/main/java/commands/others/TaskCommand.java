@@ -1,17 +1,26 @@
 package commands.others;
 
+import bossexceptions.BossException;
 import commands.Command;
 import commands.CommandsEnum;
 import storage.Storage;
-import ui.Ui;
-import bossexceptions.BossException;
 import task.Task;
 import task.TaskList;
+import ui.Ui;
 
+/**
+ * Creates a Task based on Task type.
+ */
 public class TaskCommand extends Command {
     private CommandsEnum command;
     private String taskInfo;
 
+    /**
+     * Creates a task based on command
+     *
+     * @param command enum type of task to create.
+     * @param taskInfo Information of task.
+     */
     public TaskCommand(CommandsEnum command, String taskInfo) {
         super(false);
         this.command = command;
