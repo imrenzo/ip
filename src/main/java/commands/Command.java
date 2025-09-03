@@ -1,12 +1,17 @@
 package commands;
 
-import storage.Storage;
-import ui.Ui;
 import bossexceptions.BossException;
+import storage.Storage;
 import task.TaskList;
+import ui.Ui;
 
+/**
+ * Abstract class containing methods that user Command children need to have.
+ */
 public abstract class Command {
+    // CHECKSTYLE.OFF: AbbreviationAsWordInName
     private final boolean IS_EXIT;
+    // CHECKSTYLE.ON: AbbreviationAsWordInName
 
     public Command(boolean isExit) {
         this.IS_EXIT = isExit;

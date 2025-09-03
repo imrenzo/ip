@@ -2,9 +2,14 @@ package ui;
 
 import java.util.Scanner;
 
+/**
+ * Handles printing content to screen.
+ */
 public class Ui {
+    // CHECKSTYLE.OFF: AbbreviationAsWordInName
     private static final String NAME = "Boss";
     private final Scanner SCANNER;
+    // CHECKSTYLE.ON: AbbreviationAsWordInName
 
     public Ui() {
         this.SCANNER = new Scanner(System.in);

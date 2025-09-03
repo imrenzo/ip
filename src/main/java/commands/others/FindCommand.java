@@ -9,7 +9,9 @@ import ui.Ui;
  * Finds list of tasks that user wants to find based on description.
  */
 public class FindCommand extends Command {
+    // CHECKSTYLE.OFF: AbbreviationAsWordInName
     private final String TO_FIND;
+    // CHECKSTYLE.ON: AbbreviationAsWordInName
     /**
      * Sets description of task user wants to find.
      *

@@ -3,10 +3,12 @@ package task;
 /**
  * Events: tasks that start at a specific date/time and ends at a specific date/time.
  */
-public class Events extends Task{
+public class Events extends Task {
+    // CHECKSTYLE.OFF: AbbreviationAsWordInName
+    private static final String COMMAND_CODE = "E";
     private final String FROM_DATE;
     private final String TO_DATE;
-    private static final String COMMAND_CODE = "E";
+    // CHECKSTYLE.ON: AbbreviationAsWordInName
 
     /**
      * Initialises fields of class and parent class instances.

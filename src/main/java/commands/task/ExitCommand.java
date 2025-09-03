@@ -1,12 +1,18 @@
 package commands.task;
 
+import bossexceptions.BossException;
 import commands.Command;
 import storage.Storage;
-import ui.Ui;
-import bossexceptions.BossException;
 import task.TaskList;
+import ui.Ui;
 
+/**
+ * Task when user wants to exit program
+ */
 public class ExitCommand extends Command {
+    /**
+     * Instantiates command by telling super class that this is exit command.
+     */
     public ExitCommand() {
         super(true);
     }
