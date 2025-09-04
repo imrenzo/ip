@@ -27,18 +27,23 @@ public class MarkCommand extends Command {
     }
 
     /**
-     * Creates task based on the type of task user wants to create.
+     * Marks or unmarks task based on user input.
+     *
+     * @return Message from executing task
      */
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws BossException {
+    public String execute(TaskList tasks, Ui ui, Storage storage) throws BossException {
         int index = tasks.validateTasksIndex(indexStr);
         Task currentTask = tasks.get(index);
         if (isDone) {
             currentTask.setDone();
-            System.out.println("Nice! I've marked this task as done:");
+            Ui.displayMessage("Nice! I've marked this task as done:");
         } else {
             currentTask.setNotDone();
-            System.out.println("OK, I've marked this task as not done yet:");
+            Ui.displayMessage("OK, I've marked this task as not done yet:");
         }
-        System.out.println(currentTask);
+
+        String message = currentTask.toString();
+        Ui.displayMessage(message);
+        return message;
     }
 }

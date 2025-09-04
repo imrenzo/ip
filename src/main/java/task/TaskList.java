@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 import bossexceptions.BossException;
+import ui.Ui;
 
 /**
  * Contains all the tasks in bot
@@ -57,12 +58,12 @@ public class TaskList {
     }
 
     /**
-     * Prints tasks based on task description that user wants to see.
+     * Returns tasks based on task description that user wants to see.
      * Passing empty string to description prints all tasks.
      *
      * @param description Description that user wants to see from TASKS.
      */
-    public void printAllTasks(String description) {
+    public ArrayList<Task> getAllTasks(String description) {
         ArrayList<Task> tmpTasks = this.tasks;
         if (!description.isBlank()) {
             tmpTasks = tmpTasks
@@ -71,10 +72,8 @@ public class TaskList {
                     .collect(Collectors.toCollection(ArrayList::new));
         }
         if (tmpTasks.isEmpty()) {
-            System.out.println("No tasks found");
+            return new ArrayList<>();
         }
-        for (int i = 0; i < tmpTasks.size(); i++) {
-            System.out.println((i + 1) + ": " + tmpTasks.get(i));
-        }
+        return tmpTasks;
     }
 }

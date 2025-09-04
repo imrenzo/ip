@@ -27,13 +27,17 @@ public class DeleteCommand extends Command {
      * Deletes task from tasks array.
      *
      * @param ui string format of index in tasks to remove element.
+     * @return Message from executing task
      */
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws BossException {
+    public String execute(TaskList tasks, Ui ui, Storage storage) throws BossException {
         int index = tasks.validateTasksIndex(indexStr);
         Task task = tasks.get(index);
         tasks.remove(index);
-        ui.displayMessage("Noted. I've removed this task:");
-        ui.displayMessage(task.toString());
-        ui.displayMessage("Now you have " + tasks.taskSize() + " tasks in the list.");
+
+        String message = "Noted. I've removed this task:\n";
+        message += task.toString() + "\n";
+        message += "Now you have " + tasks.taskSize() + " tasks in the list.";
+        Ui.displayMessage(message);
+        return message;
     }
 }
