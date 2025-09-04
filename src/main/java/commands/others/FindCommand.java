@@ -26,7 +26,10 @@ public class FindCommand extends Command {
     }
 
     /**
-     * Prints all elements in tasks array, adhering to a format.
+     * Gets all elements in tasks array.
+     * Tasks adhere to string format specified by user.
+     *
+     *  @return Message from executing task
      */
     public String execute(TaskList taskList, Ui ui, Storage storage) {
         ArrayList<Task> tasks = taskList.getAllTasks(TO_FIND);

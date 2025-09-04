@@ -42,8 +42,17 @@ public class MainWindow extends AnchorPane {
     }
 
     /**
-     * Creates two dialog boxes, one echoing user input and the other containing Duke's reply and then appends them to
-     * the dialog container. Clears the user input after processing.
+     * Display greeting message when bot starts
+     * */
+    public void addGreeting() {
+        dialogContainer.getChildren().add(
+                DialogBox.getBossDialog(Ui.showWelcome(), bossImage)
+        );
+    }
+
+    /**
+     * Creates two dialog boxes, one echoing user input and the other containing Boss's reply and then appends them to
+     * the dialog container. Clears the user input after processing. Exits program if user enters "bye".
      */
     @FXML
     private void handleUserInput() {
@@ -51,7 +60,7 @@ public class MainWindow extends AnchorPane {
         String bossText = boss.getResponse(userInput.getText());
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(userText, userImage),
-                DialogBox.getDukeDialog(bossText, bossImage)
+                DialogBox.getBossDialog(bossText, bossImage)
         );
         userInput.clear();
         if (Objects.equals(bossText, Ui.EXIT_MESSAGE)) {

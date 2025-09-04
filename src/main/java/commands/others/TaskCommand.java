@@ -29,13 +29,15 @@ public class TaskCommand extends Command {
 
     /**
      * Adds task to TaskList.
+     *
+     * @return Message from executing task.
      */
     public String execute(TaskList tasks, Ui ui, Storage storage) throws BossException {
         Task task = Task.parseTask(command, taskInfo);
         tasks.add(task);
 
         String message = "Got it. I've added this task:\n";
-        message += task.toString() + "\n";
+        message += task + "\n";
         message += "Now you have " + tasks.taskSize() + " tasks in the list.";
         Ui.displayMessage(message);
         return message;

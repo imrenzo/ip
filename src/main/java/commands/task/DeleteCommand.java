@@ -27,6 +27,7 @@ public class DeleteCommand extends Command {
      * Deletes task from tasks array.
      *
      * @param ui string format of index in tasks to remove element.
+     * @return Message from executing task
      */
     public String execute(TaskList tasks, Ui ui, Storage storage) throws BossException {
         int index = tasks.validateTasksIndex(indexStr);

@@ -27,7 +27,9 @@ public class MarkCommand extends Command {
     }
 
     /**
-     * Creates task based on the type of task user wants to create.
+     * Marks or unmarks task based on user input.
+     *
+     * @return Message from executing task
      */
     public String execute(TaskList tasks, Ui ui, Storage storage) throws BossException {
         int index = tasks.validateTasksIndex(indexStr);

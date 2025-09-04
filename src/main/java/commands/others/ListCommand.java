@@ -22,7 +22,9 @@ public class ListCommand extends Command {
     }
 
     /**
-     * Prints all elements in tasks array, adhering to a format.
+     * Gets all elements in tasks array.
+     *
+     * @return Message from executing task.
      */
     public String execute(TaskList taskList, Ui ui, Storage storage) throws BossException {
         ArrayList<Task> tasks = taskList.getAllTasks("");

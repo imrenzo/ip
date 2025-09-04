@@ -23,6 +23,7 @@ public abstract class Command {
      * @param tasks List of tasks.
      * @param ui Ui provides ability to display text on screen.
      * @param storage Storage provides file handling methods
+     * @return Message from executing task
      */
     public abstract String execute(TaskList tasks, Ui ui, Storage storage) throws BossException;
 
