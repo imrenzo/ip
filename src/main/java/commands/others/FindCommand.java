@@ -2,8 +2,11 @@ package commands.others;
 
 import commands.Command;
 import storage.Storage;
+import task.Task;
 import task.TaskList;
 import ui.Ui;
+
+import java.util.ArrayList;
 
 /**
  * Finds list of tasks that user wants to find based on description.
@@ -25,8 +28,8 @@ public class FindCommand extends Command {
     /**
      * Prints all elements in tasks array, adhering to a format.
      */
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
-        ui.displayMessage("Here are the matching tasks in your list:");
-        tasks.printAllTasks(TO_FIND);
+    public String execute(TaskList taskList, Ui ui, Storage storage) {
+        ArrayList<Task> tasks = taskList.getAllTasks(TO_FIND);
+        return ui.displayTasks(tasks);
     }
 }

@@ -1,8 +1,9 @@
-package main;
+package boss;
 
 import bossexceptions.BossException;
 import commands.Command;
 import commands.Parser;
+import javafx.application.Platform;
 import storage.Storage;
 import task.TaskList;
 import ui.Ui;
@@ -15,6 +16,7 @@ public class Boss {
     private final Storage STORAGE;
     private TaskList tasks;
     private final Ui UI;
+    private boolean isExit = false;
     // CHECKSTYLE.ON: AbbreviationAsWordInName
 
     /**
@@ -22,7 +24,7 @@ public class Boss {
      *
      * @param filePath file containing task strings.
      */
-    private Boss(String filePath) {
+    public Boss(String filePath) {
         UI = new Ui();
         STORAGE = new Storage(filePath);
         try {
@@ -36,8 +38,7 @@ public class Boss {
      * Runs the program.
      */
     private void run() {
-        UI.showWelcome();
-        boolean isExit = false;
+        Ui.showWelcome();
 
         // continuously loops to handle user commands
         while (!isExit) {
@@ -61,5 +62,26 @@ public class Boss {
 
     public static void main(String[] args) {
         new Boss("data/boss.txt").run();
+    }
+
+    /**
+     * Generates a response for the user's chat message.
+     */
+    public String getResponse(String input) {
+        String errorMessage = "";
+        try {
+            // UI.showLine();
+            Command c = Parser.parse(input);
+            // UI.showLine();
+            return c.execute(tasks, UI, STORAGE);
+        } catch (BossException e) {
+            errorMessage = "Error: " + e.getMessage();
+        } catch (NumberFormatException e) {
+            errorMessage = "Error: Please enter a proper number";
+        } catch (Exception e) {
+            errorMessage = "Unexpected error: " + e.getMessage();
+        }
+        UI.showError(errorMessage);
+        return errorMessage;
     }
 }

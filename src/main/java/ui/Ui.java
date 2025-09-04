@@ -1,5 +1,8 @@
 package ui;
 
+import task.Task;
+
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -9,34 +12,53 @@ public class Ui {
     // CHECKSTYLE.OFF: AbbreviationAsWordInName
     private static final String NAME = "Boss";
     private final Scanner SCANNER;
+    public static final String EXIT_MESSAGE = "Bye. Hope to see you again soon!";
     // CHECKSTYLE.ON: AbbreviationAsWordInName
 
     public Ui() {
-        this.SCANNER = new Scanner(System.in);
+        SCANNER = new Scanner(System.in);
     }
 
-    public void showWelcome() {
-        System.out.println("Hello! I'm " + NAME);
-        System.out.println("What can I do for you?");
+    public static String showWelcome() {
+        String message = "Hello! I'm " + NAME + "\n" + "What can I do for you?";
+        displayMessage(message);
+        return message;
     }
 
     public void showLine() {
-        System.out.println("_______");
+        displayMessage("_______");
     }
 
     public String readCommand() {
         return SCANNER.nextLine();
     }
 
-    public void displayMessage(String message) {
+    public static void displayMessage(String message) {
         System.out.println(message);
     }
 
     public void showError(String message) {
-        System.out.println(message);
+        displayMessage(message);
     }
 
     public void exit() {
-        System.out.println("Bye. Hope to see you again soon!");
+        displayMessage(EXIT_MESSAGE);
+    }
+
+    public String displayTasks(ArrayList<Task> tasks) {
+        if (tasks.isEmpty()) {
+            String emptyMessage = "No tasks found";
+            Ui.displayMessage(emptyMessage);
+            return emptyMessage;
+        }
+
+        ArrayList<String> messages = new ArrayList<>();
+        messages.add("Here are the tasks in your list:\n");
+        for (int i = 0; i < tasks.size(); i++) {
+            String taskString = (i + 1) + ": " + tasks.get(i);
+            Ui.displayMessage(taskString);
+            messages.add(taskString);
+        }
+        return String.join("\n", messages);
     }
 }

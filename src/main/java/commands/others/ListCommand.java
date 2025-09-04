@@ -3,8 +3,11 @@ package commands.others;
 import bossexceptions.BossException;
 import commands.Command;
 import storage.Storage;
+import task.Task;
 import task.TaskList;
 import ui.Ui;
+
+import java.util.ArrayList;
 
 /**
  * List all tasks created by user.
@@ -21,8 +24,8 @@ public class ListCommand extends Command {
     /**
      * Prints all elements in tasks array, adhering to a format.
      */
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws BossException {
-        ui.displayMessage("Here are the tasks in your list:");
-        tasks.printAllTasks("");
+    public String execute(TaskList taskList, Ui ui, Storage storage) throws BossException {
+        ArrayList<Task> tasks = taskList.getAllTasks("");
+        return ui.displayTasks(tasks);
     }
 }

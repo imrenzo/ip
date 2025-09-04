@@ -17,7 +17,8 @@ public class ExitCommand extends Command {
         super(true);
     }
 
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws BossException {
+    public String execute(TaskList tasks, Ui ui, Storage storage) throws BossException {
         storage.writeToFile(tasks); // update file with updated tasks
+        return Ui.EXIT_MESSAGE;
     }
 }

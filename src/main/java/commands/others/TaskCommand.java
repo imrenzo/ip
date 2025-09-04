@@ -30,11 +30,14 @@ public class TaskCommand extends Command {
     /**
      * Adds task to TaskList.
      */
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws BossException {
+    public String execute(TaskList tasks, Ui ui, Storage storage) throws BossException {
         Task task = Task.parseTask(command, taskInfo);
         tasks.add(task);
-        ui.displayMessage("Got it. I've added this task:");
-        ui.displayMessage(task.toString());
-        ui.displayMessage("Now you have " + tasks.taskSize() + " tasks in the list.");
+
+        String message = "Got it. I've added this task:\n";
+        message += task.toString() + "\n";
+        message += "Now you have " + tasks.taskSize() + " tasks in the list.";
+        Ui.displayMessage(message);
+        return message;
     }
 }

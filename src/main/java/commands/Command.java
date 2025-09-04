@@ -24,7 +24,7 @@ public abstract class Command {
      * @param ui Ui provides ability to display text on screen.
      * @param storage Storage provides file handling methods
      */
-    public abstract void execute(TaskList tasks, Ui ui, Storage storage) throws BossException;
+    public abstract String execute(TaskList tasks, Ui ui, Storage storage) throws BossException;
 
     public boolean getExit() {
         return this.IS_EXIT;
