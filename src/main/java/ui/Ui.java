@@ -1,26 +1,29 @@
 package ui;
 
-import task.Task;
-
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import task.Task;
 
 /**
  * Handles printing content to screen.
  */
 public class Ui {
-    // CHECKSTYLE.OFF: AbbreviationAsWordInName
-    private static final String NAME = "Boss";
-    private final Scanner SCANNER;
-    public static final String EXIT_MESSAGE = "Bye. Hope to see you again soon!";
-    // CHECKSTYLE.ON: AbbreviationAsWordInName
+    private static final String name = "Ineffa";
+    private static final String exitMessage = "Bye. Hope to see you again soon!";
+    private final Scanner scanner;
 
     public Ui() {
-        SCANNER = new Scanner(System.in);
+        scanner = new Scanner(System.in);
     }
 
+    /**
+     * Displays welcome message
+     *
+     * @return Welcome message string
+     */
     public static String showWelcome() {
-        String message = "Hello! I'm " + NAME + "\n" + "What can I do for you?";
+        String message = "Hello! I'm " + name + "\n" + "What can I do for you?";
         displayMessage(message);
         return message;
     }
@@ -30,7 +33,7 @@ public class Ui {
     }
 
     public String readCommand() {
-        return SCANNER.nextLine();
+        return scanner.nextLine();
     }
 
     public static void displayMessage(String message) {
@@ -42,9 +45,15 @@ public class Ui {
     }
 
     public void exit() {
-        displayMessage(EXIT_MESSAGE);
+        displayMessage(exitMessage);
     }
 
+    /**
+     * Prints all tasks in a specific format
+     *
+     * @param tasks List of tasks
+     * @return String concatenated with all tasks in specific format
+     */
     public String displayTasks(ArrayList<Task> tasks) {
         if (tasks.isEmpty()) {
             String emptyMessage = "No tasks found";
@@ -60,5 +69,9 @@ public class Ui {
             messages.add(taskString);
         }
         return String.join("\n", messages);
+    }
+
+    public static String getExitMessage() {
+        return exitMessage;
     }
 }

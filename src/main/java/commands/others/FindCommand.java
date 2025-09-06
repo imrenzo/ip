@@ -1,20 +1,18 @@
 package commands.others;
 
+import java.util.ArrayList;
+
 import commands.Command;
 import storage.Storage;
 import task.Task;
 import task.TaskList;
 import ui.Ui;
 
-import java.util.ArrayList;
-
 /**
  * Finds list of tasks that user wants to find based on description.
  */
 public class FindCommand extends Command {
-    // CHECKSTYLE.OFF: AbbreviationAsWordInName
-    private final String TO_FIND;
-    // CHECKSTYLE.ON: AbbreviationAsWordInName
+    private final String toFind;
     /**
      * Sets description of task user wants to find.
      *
@@ -22,7 +20,7 @@ public class FindCommand extends Command {
      */
     public FindCommand(String toFind) {
         super(false);
-        this.TO_FIND = toFind;
+        this.toFind = toFind;
     }
 
     /**
@@ -32,7 +30,7 @@ public class FindCommand extends Command {
      *  @return Message from executing task
      */
     public String execute(TaskList taskList, Ui ui, Storage storage) {
-        ArrayList<Task> tasks = taskList.getAllTasks(TO_FIND);
+        ArrayList<Task> tasks = taskList.getAllTasks(toFind);
         return ui.displayTasks(tasks);
     }
 }

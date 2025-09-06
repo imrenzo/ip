@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.Objects;
+
 import boss.Boss;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -10,8 +12,6 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import ui.Ui;
-
-import java.util.Objects;
 
 /**
  * Controller for the main GUI.
@@ -63,7 +63,7 @@ public class MainWindow extends AnchorPane {
                 DialogBox.getBossDialog(bossText, bossImage)
         );
         userInput.clear();
-        if (Objects.equals(bossText, Ui.EXIT_MESSAGE)) {
+        if (Objects.equals(bossText, Ui.getExitMessage())) {
             Platform.exit();
         }
     }

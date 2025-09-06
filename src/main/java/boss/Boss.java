@@ -3,7 +3,6 @@ package boss;
 import bossexceptions.BossException;
 import commands.Command;
 import commands.Parser;
-import javafx.application.Platform;
 import storage.Storage;
 import task.TaskList;
 import ui.Ui;
@@ -12,12 +11,10 @@ import ui.Ui;
  * Simulates a Personal Assistant Chatbot.
  */
 public class Boss {
-    // CHECKSTYLE.OFF: AbbreviationAsWordInName
-    private final Storage STORAGE;
+    private final Storage storage;
     private TaskList tasks;
-    private final Ui UI;
+    private final Ui ui;
     private boolean isExit = false;
-    // CHECKSTYLE.ON: AbbreviationAsWordInName
 
     /**
      * Reads file and updates tasks with file contents.
@@ -25,12 +22,12 @@ public class Boss {
      * @param filePath file containing task strings.
      */
     public Boss(String filePath) {
-        UI = new Ui();
-        STORAGE = new Storage(filePath);
+        ui = new Ui();
+        storage = new Storage(filePath);
         try {
-            tasks = new TaskList(STORAGE.loadFileContents());
+            tasks = new TaskList(storage.loadFileContents());
         } catch (BossException e) {
-            UI.showError(e.getMessage());
+            ui.showError(e.getMessage());
         }
     }
 
@@ -43,21 +40,21 @@ public class Boss {
         // continuously loops to handle user commands
         while (!isExit) {
             try {
-                String fullCommand = UI.readCommand();
-                // UI.showLine();
+                String fullCommand = ui.readCommand();
+                // ui.showLine();
                 Command c = Parser.parse(fullCommand);
-                c.execute(tasks, UI, STORAGE);
+                c.execute(tasks, ui, storage);
                 isExit = c.getExit();
-                // UI.showLine();
+                // ui.showLine();
             } catch (BossException e) {
-                UI.showError("Error: " + e.getMessage());
+                ui.showError("Error: " + e.getMessage());
             } catch (NumberFormatException e) {
-                UI.showError("Error: Please enter a proper number");
+                ui.showError("Error: Please enter a proper number");
             } catch (Exception e) {
-                UI.showError("Unexpected error: " + e.getMessage());
+                ui.showError("Unexpected error: " + e.getMessage());
             }
         }
-        UI.exit();
+        ui.exit();
     }
 
     public static void main(String[] args) {
@@ -70,10 +67,10 @@ public class Boss {
     public String getResponse(String input) {
         String errorMessage = "";
         try {
-            // UI.showLine();
+            // ui.showLine();
             Command c = Parser.parse(input);
-            // UI.showLine();
-            return c.execute(tasks, UI, STORAGE);
+            // ui.showLine();
+            return c.execute(tasks, ui, storage);
         } catch (BossException e) {
             errorMessage = "Error: " + e.getMessage();
         } catch (NumberFormatException e) {
@@ -81,7 +78,7 @@ public class Boss {
         } catch (Exception e) {
             errorMessage = "Unexpected error: " + e.getMessage();
         }
-        UI.showError(errorMessage);
+        ui.showError(errorMessage);
         return errorMessage;
     }
 }

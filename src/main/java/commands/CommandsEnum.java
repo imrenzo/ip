@@ -18,16 +18,14 @@ public enum CommandsEnum {
     DELETE("delete", null),
     FIND("find", null);
 
-    // CHECKSTYLE.OFF: AbbreviationAsWordInName
-    private final String COMMAND_NAME;
-    private final String SHORT_CODE;
-    // CHECKSTYLE.ON: AbbreviationAsWordInName
+    private final String commandName;
+    private final String shortCode;
     /**
      * Contains methods that bot is able to perform.
      */
     CommandsEnum(String commandName, String shortCode) {
-        this.COMMAND_NAME = commandName;
-        this.SHORT_CODE = shortCode;
+        this.commandName = commandName;
+        this.shortCode = shortCode;
     }
 
     /**
@@ -39,7 +37,7 @@ public enum CommandsEnum {
      */
     public static CommandsEnum fromString(String command) throws BossException {
         for (CommandsEnum cmd : CommandsEnum.values()) {
-            if (Objects.equals(cmd.COMMAND_NAME, command)) {
+            if (Objects.equals(cmd.commandName, command)) {
                 return cmd;
             }
         }
@@ -55,8 +53,8 @@ public enum CommandsEnum {
      */
     public static CommandsEnum fromShortCode(String code) throws BossException {
         for (CommandsEnum cmd : CommandsEnum.values()) {
-            if (Objects.equals(cmd.SHORT_CODE, code)) {
-                return fromString(cmd.COMMAND_NAME);
+            if (Objects.equals(cmd.shortCode, code)) {
+                return fromString(cmd.commandName);
             }
         }
         throw new BossException("Invalid short code");

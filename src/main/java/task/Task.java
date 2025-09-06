@@ -11,19 +11,17 @@ import commands.CommandsEnum;
  * Contains information a task needs to have.
  */
 public abstract class Task {
-    // CHECKSTYLE.OFF: AbbreviationAsWordInName
-    private final String DESCRIPTION;
+    private final String description;
     private boolean isDone;
-    private final String COMMAND_CODE;
-    // CHECKSTYLE.ON: AbbreviationAsWordInName
+    private final String commandCode;
 
     /**
      * Initialises fields of class.
      */
     public Task(String description, String commandCode) {
-        this.DESCRIPTION = description;
+        this.description = description;
         this.isDone = false;
-        this.COMMAND_CODE = commandCode;
+        this.commandCode = commandCode;
     }
 
     public void setDone() {
@@ -40,7 +38,7 @@ public abstract class Task {
 
     @Override
     public String toString() {
-        return "[" + getStatusIcon() + "]" + " " + DESCRIPTION;
+        return "[" + getStatusIcon() + "]" + " " + description;
     }
 
     /**
@@ -122,12 +120,12 @@ public abstract class Task {
     }
 
     /**
-     * Checks if task DESCRIPTION contains description
+     * Checks if task description contains description
      * @param description Description method caller wants to find
      * @return boolean
      */
     public boolean containsDescription(String description) {
-        return this.DESCRIPTION.contains(description);
+        return this.description.contains(description);
     }
 
 
@@ -137,9 +135,9 @@ public abstract class Task {
      * @return Suitable string format of task.
      */
     public String getFileString() {
-        String description = this.DESCRIPTION.trim();
+        String description = this.description.trim();
         String isDone = this.isDone ? "1" : "0";
-        String cmdType = this.COMMAND_CODE;
+        String cmdType = this.commandCode;
         String[] arr = {cmdType, isDone, description};
         return String.join(" | ", arr) + "\n";
 

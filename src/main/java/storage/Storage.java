@@ -2,8 +2,8 @@ package storage;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -16,9 +16,7 @@ import task.TaskList;
  * Contains methods to handle manipulation of txt file containing list of tasks.
  */
 public class Storage {
-    // CHECKSTYLE.OFF: AbbreviationAsWordInName
-    private final String FILE_PATH;
-    // CHECKSTYLE.ON: AbbreviationAsWordInName
+    private final String filePath;
 
     /**
      * Sets file location in class instance.
@@ -26,7 +24,7 @@ public class Storage {
      * @param filePath File location of text file.
      */
     public Storage(String filePath) {
-        this.FILE_PATH = filePath;
+        this.filePath = filePath;
     }
 
     /**
@@ -38,7 +36,7 @@ public class Storage {
      */
     public ArrayList<Task> loadFileContents() throws BossException {
         ArrayList<Task> tasks = new ArrayList<>();
-        File f = new File(this.FILE_PATH);
+        File f = new File(this.filePath);
         try {
             Scanner s = new Scanner(f);
 
@@ -68,7 +66,7 @@ public class Storage {
      */
     public void writeToFile(TaskList tasks) throws BossException {
         try {
-            FileWriter fw = new FileWriter(this.FILE_PATH);
+            FileWriter fw = new FileWriter(this.filePath);
             for (Task task : tasks.list()) {
                 fw.write(task.getFileString());
             }

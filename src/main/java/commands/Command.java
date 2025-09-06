@@ -9,12 +9,10 @@ import ui.Ui;
  * Abstract class containing methods that user Command children need to have.
  */
 public abstract class Command {
-    // CHECKSTYLE.OFF: AbbreviationAsWordInName
-    private final boolean IS_EXIT;
-    // CHECKSTYLE.ON: AbbreviationAsWordInName
+    private final boolean isExit;
 
     public Command(boolean isExit) {
-        this.IS_EXIT = isExit;
+        this.isExit = isExit;
     }
 
     /**
@@ -28,6 +26,6 @@ public abstract class Command {
     public abstract String execute(TaskList tasks, Ui ui, Storage storage) throws BossException;
 
     public boolean getExit() {
-        return this.IS_EXIT;
+        return this.isExit;
     }
 }
