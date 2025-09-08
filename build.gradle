@@ -29,19 +29,19 @@ dependencies {
     implementation group: 'org.openjfx', name: 'javafx-graphics', version: javaFxVersion, classifier: 'linux'
 }
 
-//test {
-//    useJUnitPlatform()
-//
-//    testLogging {
-//        events "passed", "skipped", "failed"
-//
-//        showExceptions true
-//        exceptionFormat "full"
-//        showCauses true
-//        showStackTraces true
-//        showStandardStreams = false
-//    }
-//}
+test {
+    useJUnitPlatform()
+
+    testLogging {
+        events "passed", "skipped", "failed"
+
+        showExceptions true
+        exceptionFormat "full"
+        showCauses true
+        showStackTraces true
+        showStandardStreams = false
+    }
+}
 
 application {
     mainClass.set("Boss")
