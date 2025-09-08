@@ -42,7 +42,7 @@ public class Storage {
             while (s.hasNext()) {
                 String line = s.nextLine();
                 String[] taskStr = line.split("\\|");
-                if (taskStr.length != 3 || taskStr[0].isBlank() || taskStr[1].isBlank() || taskStr[2].isBlank()) {
+                if (validateFileText(taskStr)) {
                     throw new BossException("Invalid format for task " + line + " in loaded file.");
                 }
 
@@ -73,5 +73,15 @@ public class Storage {
         } catch (IOException e) {
             throw new BossException(e.getMessage());
         }
+    }
+
+    /**
+     * Ensures that text in file adheres to format.
+     *
+     * @param text Line of text in file
+     * @return true if text does not adhere to format.
+     */
+    private boolean validateFileText(String[] text) {
+        return text.length != 3 || text[0].isBlank() || text[1].isBlank() || text[2].isBlank();
     }
 }
