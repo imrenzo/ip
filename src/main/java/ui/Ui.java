@@ -62,12 +62,14 @@ public class Ui {
         }
 
         ArrayList<String> messages = new ArrayList<>();
-        messages.add("Here are the tasks in your list:\n");
+        String headerMessage = "Here are the tasks in your list:\n";
+        messages.add(headerMessage);
         for (int i = 0; i < tasks.size(); i++) {
             String taskString = (i + 1) + ": " + tasks.get(i);
             Ui.displayMessage(taskString);
             messages.add(taskString);
         }
+        assert messages.size() > 1 : "List of messages should not only contain headerMessage";
         return String.join("\n", messages);
     }
 

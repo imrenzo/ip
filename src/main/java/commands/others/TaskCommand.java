@@ -4,8 +4,7 @@ import bossexceptions.BossException;
 import commands.Command;
 import commands.CommandsEnum;
 import storage.Storage;
-import task.Task;
-import task.TaskList;
+import task.*;
 import ui.Ui;
 
 /**

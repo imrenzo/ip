@@ -9,8 +9,7 @@ import java.util.Scanner;
 
 import bossexceptions.BossException;
 import commands.CommandsEnum;
-import task.Task;
-import task.TaskList;
+import task.*;
 
 /**
  * Contains methods to handle manipulation of txt file containing list of tasks.

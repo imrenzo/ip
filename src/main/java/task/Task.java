@@ -116,6 +116,9 @@ public abstract class Task {
         if (isDone) {
             task.setDone();
         }
+        assert (task instanceof ToDos) ||
+                (task instanceof Deadlines) ||
+                (task instanceof Events) : "Task not of type ToDos, Deadlines, Events";
         return task;
     }
 
