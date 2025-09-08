@@ -23,7 +23,7 @@ public class Ui {
      * @return Welcome message string
      */
     public static String showWelcome() {
-        String message = "Hello! I'm " + name + "\n" + "What can I do for you?";
+        String message = "Hello! I'm " + name + "\n" + "What can I do for you? Enter \"help\" if needed";
         displayMessage(message);
         return message;
     }
