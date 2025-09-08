@@ -128,7 +128,6 @@ public abstract class Task {
         return this.description.contains(description);
     }
 
-
     /**
      * Generates a suitable string of task to add into file
      *
@@ -140,6 +139,5 @@ public abstract class Task {
         String cmdType = this.commandCode;
         String[] arr = {cmdType, isDone, description};
         return String.join(" | ", arr) + "\n";
-
     }
 }

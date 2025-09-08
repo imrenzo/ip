@@ -36,9 +36,8 @@ public class TaskCommand extends Command {
         Task task = Task.parseTask(command, taskInfo);
         tasks.add(task);
 
-        String message = "Got it. I've added this task:\n";
-        message += task + "\n";
-        message += "Now you have " + tasks.taskSize() + " tasks in the list.";
+        String message = "Got it. I've added this task:\n" + task
+                + "\n" + "Now you have " + tasks.taskSize() + " tasks in the list.";
         Ui.displayMessage(message);
         return message;
     }
