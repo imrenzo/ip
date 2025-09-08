@@ -2,6 +2,7 @@ package commands;
 
 import bossexceptions.BossException;
 import commands.others.FindCommand;
+import commands.others.HelpCommand;
 import commands.others.ListCommand;
 import commands.others.TaskCommand;
 import commands.task.DeleteCommand;
@@ -45,6 +46,9 @@ public class Parser {
         }
         case FIND -> {
             return new FindCommand(removeCmd);
+        }
+        case HELP -> {
+            return new HelpCommand(removeCmd);
         }
         default -> throw new BossException("Invalid command");
         }

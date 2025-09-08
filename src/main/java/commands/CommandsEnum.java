@@ -16,7 +16,8 @@ public enum CommandsEnum {
     DEADLINE("deadline", "D"),
     EVENT("event", "E"),
     DELETE("delete", null),
-    FIND("find", null);
+    FIND("find", null),
+    HELP("help", null);
 
     private final String commandName;
     private final String shortCode;
