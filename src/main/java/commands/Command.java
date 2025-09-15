@@ -10,9 +10,11 @@ import ui.Ui;
  */
 public abstract class Command {
     private final boolean isExit;
+    private final CommandsEnum commandType;
 
-    public Command(boolean isExit) {
+    public Command(boolean isExit, CommandsEnum commandType) {
         this.isExit = isExit;
+        this.commandType = commandType;
     }
 
     /**
@@ -27,5 +29,9 @@ public abstract class Command {
 
     public boolean getExit() {
         return this.isExit;
+    }
+
+    public CommandsEnum getCommandType() {
+        return this.commandType;
     }
 }
