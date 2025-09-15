@@ -3,6 +3,7 @@ package commands.others;
 import java.util.ArrayList;
 
 import commands.Command;
+import commands.CommandsEnum;
 import storage.Storage;
 import task.Task;
 import task.TaskList;
@@ -19,7 +20,7 @@ public class FindCommand extends Command {
      * @param toFind Description of task.
      */
     public FindCommand(String toFind) {
-        super(false);
+        super(false, CommandsEnum.FIND);
         this.toFind = toFind;
     }
 

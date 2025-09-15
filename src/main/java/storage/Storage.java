@@ -7,8 +7,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import bossexceptions.BossException;
 import commands.CommandsEnum;
+import ineffaexceptions.IneffaException;
 import task.Task;
 import task.TaskList;
 
@@ -31,11 +31,12 @@ public class Storage {
      * Loads all task into a Task array from txt file.
      *
      * @return Task array.
-     * @throws BossException If text in file has invalid format.
-     * @throws BossException If file is not found.
+     * @throws IneffaException If text in file has invalid format.
+     * @throws IneffaException If file is not found.
      */
-    public ArrayList<Task> loadFileContents() throws BossException {
+    public ArrayList<Task> loadFileContents() throws IneffaException {
         ArrayList<Task> tasks = new ArrayList<>();
+        System.out.println(filePath);
         File f = new File(this.filePath);
         try {
             Scanner s = new Scanner(f);
@@ -44,7 +45,7 @@ public class Storage {
                 String line = s.nextLine();
                 String[] taskStr = line.split("\\|");
                 if (validateFileText(taskStr)) {
-                    throw new BossException("Invalid format for task " + line + " in loaded file.");
+                    throw new IneffaException("Invalid format for task " + line + " in loaded file.");
                 }
 
                 CommandsEnum taskType = CommandsEnum.fromShortCode(taskStr[0].trim());
@@ -54,7 +55,7 @@ public class Storage {
                 tasks.add(task);
             }
         } catch (FileNotFoundException e) {
-            throw new BossException("Error: Please create a boss.txt file under [project root]/data/boss.txt");
+            throw new IneffaException("Error: Please create a ineffa.txt file under [project root]/data/ineffa.txt");
         }
         return tasks;
     }
@@ -64,7 +65,7 @@ public class Storage {
      *
      * @param tasks array of tasks to add to file.
      */
-    public void writeToFile(TaskList tasks) throws BossException {
+    public void writeToFile(TaskList tasks) throws IneffaException {
         try {
             FileWriter fw = new FileWriter(this.filePath);
             for (Task task : tasks.list()) {
@@ -72,7 +73,7 @@ public class Storage {
             }
             fw.close();
         } catch (IOException e) {
-            throw new BossException(e.getMessage());
+            throw new IneffaException(e.getMessage());
         }
     }
 

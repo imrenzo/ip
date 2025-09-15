@@ -2,8 +2,9 @@ package commands.others;
 
 import java.util.ArrayList;
 
-import bossexceptions.BossException;
 import commands.Command;
+import commands.CommandsEnum;
+import ineffaexceptions.IneffaException;
 import storage.Storage;
 import task.Task;
 import task.TaskList;
@@ -18,7 +19,7 @@ public class ListCommand extends Command {
      * So that program does not exit on ListCommand.
      */
     public ListCommand() {
-        super(false);
+        super(false, CommandsEnum.LIST);
     }
 
     /**
@@ -26,7 +27,7 @@ public class ListCommand extends Command {
      *
      * @return Message from executing task.
      */
-    public String execute(TaskList taskList, Ui ui, Storage storage) throws BossException {
+    public String execute(TaskList taskList, Ui ui, Storage storage) throws IneffaException {
         ArrayList<Task> tasks = taskList.getAllTasks("");
         return ui.displayTasks(tasks);
     }

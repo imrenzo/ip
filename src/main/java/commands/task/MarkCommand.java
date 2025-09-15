@@ -1,7 +1,8 @@
 package commands.task;
 
-import bossexceptions.BossException;
 import commands.Command;
+import commands.CommandsEnum;
+import ineffaexceptions.IneffaException;
 import storage.Storage;
 import task.Task;
 import task.TaskList;
@@ -21,7 +22,7 @@ public class MarkCommand extends Command {
      * @param isDone task is done: true, task is not done: false
      */
     public MarkCommand(String indexStr, boolean isDone) {
-        super(false);
+        super(false, isDone ? CommandsEnum.MARK : CommandsEnum.UNMARK);
         this.isDone = isDone;
         this.indexStr = indexStr;
     }
@@ -31,7 +32,7 @@ public class MarkCommand extends Command {
      *
      * @return Message from executing task
      */
-    public String execute(TaskList tasks, Ui ui, Storage storage) throws BossException {
+    public String execute(TaskList tasks, Ui ui, Storage storage) throws IneffaException {
         int index = tasks.validateTasksIndex(indexStr);
         Task currentTask = tasks.get(index);
         if (isDone) {

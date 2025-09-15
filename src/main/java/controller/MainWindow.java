@@ -2,7 +2,6 @@ package controller;
 
 import java.util.Objects;
 
-import boss.Boss;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -26,19 +25,19 @@ public class MainWindow extends AnchorPane {
     @FXML
     private Button sendButton;
 
-    private Boss boss = new Boss("data/boss.txt");
+    private ineffa.Ineffa ineffa = new ineffa.Ineffa("data/ineffa.txt");
 
     private Image userImage = new Image(this.getClass().getResourceAsStream("/images/aether.jpg"));
-    private Image bossImage = new Image(this.getClass().getResourceAsStream("/images/ineffa.jpg"));
+    private Image ineffaImage = new Image(this.getClass().getResourceAsStream("/images/ineffa.jpg"));
 
     @FXML
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
     }
 
-    /** Injects the Boss instance */
-    public void setBoss(Boss b) {
-        boss = b;
+    /** Injects the Ineffa instance */
+    public void setIneffa(ineffa.Ineffa b) {
+        ineffa = b;
     }
 
     /**
@@ -46,24 +45,24 @@ public class MainWindow extends AnchorPane {
      * */
     public void addGreeting() {
         dialogContainer.getChildren().add(
-                DialogBox.getBossDialog(Ui.showWelcome(), bossImage)
+                DialogBox.getIneffaDialog(Ui.showWelcome(), ineffaImage)
         );
     }
 
     /**
-     * Creates two dialog boxes, one echoing user input and the other containing Boss's reply and then appends them to
+     * Creates two dialog boxes, one echoing user input and the other containing Ineffa's reply and then appends them to
      * the dialog container. Clears the user input after processing. Exits program if user enters "bye".
      */
     @FXML
     private void handleUserInput() {
         String userText = userInput.getText();
-        String bossText = boss.getResponse(userInput.getText());
+        String ineffaText = ineffa.getResponse(userInput.getText());
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(userText, userImage),
-                DialogBox.getBossDialog(bossText, bossImage)
+                DialogBox.getIneffaDialog(ineffaText, ineffaImage)
         );
         userInput.clear();
-        if (Objects.equals(bossText, Ui.getExitMessage())) {
+        if (Objects.equals(ineffaText, Ui.getExitMessage())) {
             Platform.exit();
         }
     }

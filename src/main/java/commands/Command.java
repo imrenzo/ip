@@ -1,6 +1,6 @@
 package commands;
 
-import bossexceptions.BossException;
+import ineffaexceptions.IneffaException;
 import storage.Storage;
 import task.TaskList;
 import ui.Ui;
@@ -12,6 +12,12 @@ public abstract class Command {
     private final boolean isExit;
     private final CommandsEnum commandType;
 
+    /**
+     * Instantiaties class
+     *
+     * @param isExit whether command causes program to exit
+     * @param commandType Track type of command of child class
+     */
     public Command(boolean isExit, CommandsEnum commandType) {
         this.isExit = isExit;
         this.commandType = commandType;
@@ -25,7 +31,7 @@ public abstract class Command {
      * @param storage Storage provides file handling methods
      * @return Message from executing task
      */
-    public abstract String execute(TaskList tasks, Ui ui, Storage storage) throws BossException;
+    public abstract String execute(TaskList tasks, Ui ui, Storage storage) throws IneffaException;
 
     public boolean getExit() {
         return this.isExit;

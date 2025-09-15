@@ -1,8 +1,8 @@
-package boss;
+package ineffa;
 
-import bossexceptions.BossException;
 import commands.Command;
 import commands.Parser;
+import ineffaexceptions.IneffaException;
 import storage.Storage;
 import task.TaskList;
 import ui.Ui;
@@ -10,7 +10,7 @@ import ui.Ui;
 /**
  * Simulates a Personal Assistant Chatbot.
  */
-public class Boss {
+public class Ineffa {
     private final Storage storage;
     private TaskList tasks;
     private final Ui ui;
@@ -21,12 +21,12 @@ public class Boss {
      *
      * @param filePath file containing task strings.
      */
-    public Boss(String filePath) {
+    public Ineffa(String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);
         try {
             tasks = new TaskList(storage.loadFileContents());
-        } catch (BossException e) {
+        } catch (IneffaException e) {
             ui.showError(e.getMessage());
         }
     }
@@ -46,7 +46,7 @@ public class Boss {
                 c.execute(tasks, ui, storage);
                 isExit = c.getExit();
                 // ui.showLine();
-            } catch (BossException e) {
+            } catch (IneffaException e) {
                 ui.showError("Error: " + e.getMessage());
             } catch (NumberFormatException e) {
                 ui.showError("Error: Please enter a proper number");
@@ -58,7 +58,7 @@ public class Boss {
     }
 
     public static void main(String[] args) {
-        new Boss("data/boss.txt").run();
+        new ineffa.Ineffa("data/ineffa.txt").run();
     }
 
     /**
@@ -71,7 +71,7 @@ public class Boss {
             Command c = Parser.parse(input);
             // ui.showLine();
             return c.execute(tasks, ui, storage);
-        } catch (BossException e) {
+        } catch (IneffaException e) {
             errorMessage = "Error: " + e.getMessage();
         } catch (NumberFormatException e) {
             errorMessage = "Error: Please enter a proper number";

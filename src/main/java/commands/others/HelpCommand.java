@@ -4,8 +4,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-import bossexceptions.BossException;
 import commands.Command;
+import commands.CommandsEnum;
+import ineffaexceptions.IneffaException;
 import storage.Storage;
 import task.TaskList;
 import ui.Ui;
@@ -19,7 +20,7 @@ public class HelpCommand extends Command {
 
     /** Instantiates super class */
     public HelpCommand(String commandType) {
-        super(false);
+        super(false, CommandsEnum.HELP);
         if (!commandType.isEmpty()) {
             this.fileName = commandType + ".txt";
         }
@@ -30,7 +31,7 @@ public class HelpCommand extends Command {
      *
      * @return All text in help.txt.
      */
-    public String execute(TaskList tasks, Ui ui, Storage storage) throws BossException {
+    public String execute(TaskList tasks, Ui ui, Storage storage) throws IneffaException {
         String path = this.mainPath + this.fileName;
         File f = new File(path);
         try {
@@ -43,7 +44,7 @@ public class HelpCommand extends Command {
             }
             return message.toString();
         } catch (FileNotFoundException e) {
-            throw new BossException("Error: cannot find help.txt file in " + path);
+            throw new IneffaException("Error: cannot find help.txt file in " + path);
         }
     }
 }

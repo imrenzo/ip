@@ -1,7 +1,7 @@
 package task;
 
-import bossexceptions.BossException;
 import commands.CommandsEnum;
+import ineffaexceptions.IneffaException;
 
 /**
  * Contains information a task needs to have.
@@ -43,17 +43,17 @@ public abstract class Task {
      * @param command type of task to create.
      * @param taskInfo description and dates (if required) of task.
      * @return Task task.
-     * @throws BossException If invalid format for parameters.
+     * @throws IneffaException If invalid format for parameters.
      */
-    public static Task parseTask(CommandsEnum command, String taskInfo) throws BossException {
+    public static Task parseTask(CommandsEnum command, String taskInfo) throws IneffaException {
         if (taskInfo.isBlank()) {
-            throw new BossException("Please enter a description for a " + command + " task.");
+            throw new IneffaException("Please enter a description for a " + command + " task.");
         }
         return switch (command) {
         case TODO -> ToDos.createTask(taskInfo);
         case DEADLINE -> Deadlines.createTask(taskInfo);
         case EVENT -> Events.createTask(taskInfo);
-        default -> throw new BossException("unrecognised cmd type: " + command);
+        default -> throw new IneffaException("unrecognised cmd type: " + command);
         };
     }
 
@@ -64,9 +64,9 @@ public abstract class Task {
      * @param isDone mark task as done if true
      * @param taskInfo description and dates (if required) of task.
      * @return Task task.
-     * @throws BossException If invalid format for parameters.
+     * @throws IneffaException If invalid format for parameters.
      */
-    public static Task parseTask(CommandsEnum command, boolean isDone, String taskInfo) throws BossException {
+    public static Task parseTask(CommandsEnum command, boolean isDone, String taskInfo) throws IneffaException {
         Task task = parseTask(command, taskInfo);
         if (isDone) {
             task.setDone();

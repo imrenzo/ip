@@ -1,8 +1,8 @@
 package commands.others;
 
-import bossexceptions.BossException;
 import commands.Command;
 import commands.CommandsEnum;
+import ineffaexceptions.IneffaException;
 import storage.Storage;
 import task.Task;
 import task.TaskList;
@@ -22,7 +22,7 @@ public class TaskCommand extends Command {
      * @param taskInfo Information of task.
      */
     public TaskCommand(CommandsEnum command, String taskInfo) {
-        super(false);
+        super(false, command);
         this.command = command;
         this.taskInfo = taskInfo;
     }
@@ -32,7 +32,7 @@ public class TaskCommand extends Command {
      *
      * @return Message from executing task.
      */
-    public String execute(TaskList tasks, Ui ui, Storage storage) throws BossException {
+    public String execute(TaskList tasks, Ui ui, Storage storage) throws IneffaException {
         Task task = Task.parseTask(command, taskInfo);
         tasks.add(task);
 

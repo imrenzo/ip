@@ -6,8 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import bossexceptions.BossException;
 import commands.CommandsEnum;
+import ineffaexceptions.IneffaException;
 
 /**
  * Test for task commands.
@@ -16,10 +16,10 @@ public class TaskTest {
     /**
      * Test that tasks created with correct status
      *
-     * @throws BossException If error encountered during parsing of task
+     * @throws IneffaException If error encountered during parsing of task
      */
     @Test
-    public void parseTask_createsCorrectTaskStatus_success() throws BossException {
+    public void parseTask_createsCorrectTaskStatus_success() throws IneffaException {
         String input = "project meeting /from 2025-02-11 2pm /to 4pm";
         Task doneEvent = Task.parseTask(CommandsEnum.EVENT, true, input);
         Task notDoneEvent = Task.parseTask(CommandsEnum.EVENT, false, input);
@@ -34,11 +34,11 @@ public class TaskTest {
     }
 
     /**
-     * Test that BossException thrown when task info is blank
+     * Test that IneffaException thrown when task info is blank
      */
     @Test
-    public void parseTask_taskInfoIsBlank_throwsBossException() {
-        BossException e = assertThrows(BossException.class, () -> Task.parseTask(CommandsEnum.EVENT, ""));
+    public void parseTask_taskInfoIsBlank_throwsIneffaException() {
+        IneffaException e = assertThrows(IneffaException.class, () -> Task.parseTask(CommandsEnum.EVENT, ""));
 
         String expectedMessage = "Please enter a description for a EVENT task.";
         String actualMessage = e.getMessage();

@@ -1,7 +1,8 @@
 package commands.task;
 
-import bossexceptions.BossException;
 import commands.Command;
+import commands.CommandsEnum;
+import ineffaexceptions.IneffaException;
 import storage.Storage;
 import task.TaskList;
 import ui.Ui;
@@ -14,7 +15,7 @@ public class ExitCommand extends Command {
      * Instantiates command by telling super class that this is exit command.
      */
     public ExitCommand() {
-        super(true);
+        super(true, CommandsEnum.BYE);
     }
 
     /**
@@ -22,7 +23,7 @@ public class ExitCommand extends Command {
      *
      * @return Message from executing task
      */
-    public String execute(TaskList tasks, Ui ui, Storage storage) throws BossException {
+    public String execute(TaskList tasks, Ui ui, Storage storage) throws IneffaException {
         storage.writeToFile(tasks); // update file with updated tasks
         return Ui.getExitMessage();
     }

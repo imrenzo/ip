@@ -1,7 +1,8 @@
 package commands.task;
 
-import bossexceptions.BossException;
 import commands.Command;
+import commands.CommandsEnum;
+import ineffaexceptions.IneffaException;
 import storage.Storage;
 import task.Task;
 import task.TaskList;
@@ -19,7 +20,7 @@ public class DeleteCommand extends Command {
      * @param indexStr index of task to delete in TaskList
      */
     public DeleteCommand(String indexStr) {
-        super(false);
+        super(false, CommandsEnum.DELETE);
         this.indexStr = indexStr;
     }
 
@@ -29,7 +30,7 @@ public class DeleteCommand extends Command {
      * @param ui string format of index in tasks to remove element.
      * @return Message from executing task
      */
-    public String execute(TaskList tasks, Ui ui, Storage storage) throws BossException {
+    public String execute(TaskList tasks, Ui ui, Storage storage) throws IneffaException {
         int index = tasks.validateTasksIndex(indexStr);
         Task task = tasks.get(index);
         tasks.remove(index);

@@ -44,13 +44,13 @@ test {
 }
 
 application {
-    mainClass.set("Boss")
+    mainClass.set("Ineffa")
 }
 
 shadowJar {
-    archiveBaseName = "boss"
+    archiveBaseName = "ineffa"
     archiveClassifier = null
-    archiveFileName = "boss.jar"
+    archiveFileName = "ineffa.jar"
 }
 
 run{

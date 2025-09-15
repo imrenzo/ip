@@ -3,7 +3,7 @@ package task;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-import bossexceptions.BossException;
+import ineffaexceptions.IneffaException;
 
 /**
  * Contains all the tasks in bot
@@ -24,12 +24,12 @@ public class TaskList {
      * @param indexStr string format of index in tasks.
      * @return int value of valid indexStr
      * @throws NumberFormatException If indexStr cannot be parsed as int
-     * @throws BossException If index value < 0 or greater than tasks array size.
+     * @throws IneffaException If index value < 0 or greater than tasks array size.
      */
-    public int validateTasksIndex(String indexStr) throws BossException, NumberFormatException {
+    public int validateTasksIndex(String indexStr) throws IneffaException, NumberFormatException {
         int index = Integer.parseInt(indexStr) - 1;
         if (index >= this.tasks.size() || index < 0) {
-            throw new BossException("Invalid index number");
+            throw new IneffaException("Invalid index number");
         }
         return index;
     }

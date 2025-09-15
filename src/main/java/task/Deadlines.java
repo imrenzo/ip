@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
-import bossexceptions.BossException;
+import ineffaexceptions.IneffaException;
 
 /**
  * Deadlines: tasks that need to be done before a specific date/time e.g., submit report by 11/10/2019 5pm
@@ -34,7 +34,7 @@ public class Deadlines extends Task {
      * @param taskInfo Description of task
      * @return Deadlines Task
      */
-    public static Deadlines createTask(String taskInfo) throws BossException {
+    public static Deadlines createTask(String taskInfo) throws IneffaException {
         try {
             // Date format string is in dd-MM-yyyy
             // However task print out in yyyy-MM-dd
@@ -46,21 +46,21 @@ public class Deadlines extends Task {
             LocalDate formatDate = changeDateFormat(date);
             return new Deadlines(description, formatDate, time);
         } catch (DateTimeParseException e) {
-            throw new BossException("Invalid format for date and time.");
+            throw new IneffaException("Invalid format for date and time.");
         }
     }
 
-    private static String[] splitString(String taskInfo) throws BossException {
+    private static String[] splitString(String taskInfo) throws IneffaException {
         String[] split = taskInfo.split("/by ", 2);
         if (split.length < 2 || split[0].isBlank() || split[1].isBlank()) {
-            throw new BossException("Invalid format for deadline task.");
+            throw new IneffaException("Invalid format for deadline task.");
         }
         String description = split[0].trim();
 
         String dateAndTime = split[1].trim();
         String[] dateAndTimeSplit = dateAndTime.split(" ");
         if (dateAndTimeSplit.length < 2 || dateAndTimeSplit[0].isBlank() || dateAndTimeSplit[1].isBlank()) {
-            throw new BossException("Invalid format for date and time.");
+            throw new IneffaException("Invalid format for date and time.");
         }
         String date = dateAndTimeSplit[0];
         String time = dateAndTimeSplit[1].trim();
