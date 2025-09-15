@@ -46,4 +46,8 @@ public class MarkCommand extends Command {
         Ui.displayMessage(message);
         return message;
     }
+
+    public boolean isDone() {
+        return this.isDone;
+    }
 }
