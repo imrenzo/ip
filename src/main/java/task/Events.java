@@ -13,8 +13,8 @@ public class Events extends Task {
     /**
      * Initialises fields of class and parent class instances.
      */
-    public Events(String description, String fromDate, String toDate) {
-        super(description, commandCode);
+    public Events(String fullInfo, String description, String fromDate, String toDate) {
+        super(fullInfo, description, commandCode);
         this.fromDate = fromDate;
         this.toDate = toDate;
     }
@@ -34,7 +34,7 @@ public class Events extends Task {
         String description = splittedString[0];
         String fromDate = splittedString[1].trim();
         String toDate = splittedString[2].trim();
-        return new Events(description, fromDate, toDate);
+        return new Events(taskInfo, description, fromDate, toDate);
     }
 
     private static String[] splitString(String taskInfo) throws IneffaException {

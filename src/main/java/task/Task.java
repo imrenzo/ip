@@ -7,6 +7,7 @@ import ineffaexceptions.IneffaException;
  * Contains information a task needs to have.
  */
 public abstract class Task {
+    private final String fullInfo;
     private final String description;
     private boolean isDone;
     private final String commandCode;
@@ -14,7 +15,8 @@ public abstract class Task {
     /**
      * Initialises fields of class.
      */
-    public Task(String description, String commandCode) {
+    public Task(String fullInfo, String description, String commandCode) {
+        this.fullInfo = fullInfo;
         this.description = description;
         this.isDone = false;
         this.commandCode = commandCode;
@@ -92,10 +94,10 @@ public abstract class Task {
      * @return Suitable string format of task.
      */
     public String getFileString() {
-        String description = this.description.trim();
+        String body = this.fullInfo.trim();
         String isDone = this.isDone ? "1" : "0";
         String cmdType = this.commandCode;
-        String[] arr = {cmdType, isDone, description};
+        String[] arr = {cmdType, isDone, body};
         return String.join(" | ", arr) + "\n";
     }
 }

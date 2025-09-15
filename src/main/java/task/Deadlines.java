@@ -17,8 +17,8 @@ public class Deadlines extends Task {
     /**
      * Initialises fields of class and parent class instances.
      */
-    public Deadlines(String description, LocalDate date, String time) {
-        super(description, commandCode);
+    public Deadlines(String fullInfo, String description, LocalDate date, String time) {
+        super(fullInfo, description, commandCode);
         this.date = date;
         this.time = time;
     }
@@ -44,7 +44,7 @@ public class Deadlines extends Task {
             String time = splittedString[2];
 
             LocalDate formatDate = changeDateFormat(date);
-            return new Deadlines(description, formatDate, time);
+            return new Deadlines(taskInfo, description, formatDate, time);
         } catch (DateTimeParseException e) {
             throw new IneffaException("Invalid format for date and time.");
         }

@@ -10,7 +10,7 @@ public class ToDos extends Task {
      * Initialises fields of class and parent class instances.
      */
     public ToDos(String description) {
-        super(description, commandCode);
+        super(description, description, commandCode);
     }
 
     @Override
