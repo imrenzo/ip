@@ -1,6 +1,6 @@
 # Ineffa User Guide
 
-![Product screenshot](Ui.PNG)
+![Product screenshot](Ui.png)
 
 Ineffa is a bot that help you to track tasks that you need to do.
 
