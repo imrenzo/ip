@@ -40,7 +40,7 @@ public abstract class Task {
     }
 
     /**
-     * Call task creation method based on the type of task user wants to create.
+     * Creates task based on the type of task user wants to create.
      *
      * @param command type of task to create.
      * @param taskInfo description and dates (if required) of task.
