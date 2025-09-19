@@ -28,10 +28,6 @@ public class Ui {
         return message;
     }
 
-    public void showLine() {
-        displayMessage("_______");
-    }
-
     public String readCommand() {
         return scanner.nextLine();
     }

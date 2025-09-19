@@ -41,11 +41,9 @@ public class Ineffa {
         while (!isExit) {
             try {
                 String fullCommand = ui.readCommand();
-                // ui.showLine();
                 Command c = Parser.parse(fullCommand);
                 c.execute(tasks, ui, storage);
                 isExit = c.getExit();
-                // ui.showLine();
             } catch (IneffaException e) {
                 ui.showError("Error: " + e.getMessage());
             } catch (NumberFormatException e) {
@@ -67,9 +65,7 @@ public class Ineffa {
     public String getResponse(String input) {
         String errorMessage = "";
         try {
-            // ui.showLine();
             Command c = Parser.parse(input);
-            // ui.showLine();
             return c.execute(tasks, ui, storage);
         } catch (IneffaException e) {
             errorMessage = "Error: " + e.getMessage();

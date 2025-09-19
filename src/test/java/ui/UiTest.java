@@ -120,15 +120,6 @@ class UiTest {
     }
 
     /**
-     * Tests that {@link Ui#showLine()} prints the divider line.
-     */
-    @Test
-    void testShowLine() {
-        ui.showLine();
-        assertTrue(outputStream.toString().contains("_______"));
-    }
-
-    /**
      * Tests that {@link Ui#readCommand()} reads a command from input.
      * Input is simulated using a dummy string.
      */
