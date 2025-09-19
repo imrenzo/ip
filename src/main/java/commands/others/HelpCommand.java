@@ -1,7 +1,6 @@
 package commands.others;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.Scanner;
 
 import commands.Command;
@@ -15,7 +14,7 @@ import ui.Ui;
  * Gets text from help file and prints it out.
  */
 public class HelpCommand extends Command {
-    private final String mainPath = "src/main/resources/help/";
+    private final String mainPath = "help/";
     private String fileName = "help.txt";
 
     /** Instantiates super class */
@@ -33,18 +32,20 @@ public class HelpCommand extends Command {
      */
     public String execute(TaskList tasks, Ui ui, Storage storage) throws IneffaException {
         String path = this.mainPath + this.fileName;
-        File f = new File(path);
-        try {
-            Scanner s = new Scanner(f);
-            StringBuilder message = new StringBuilder();
-            while (s.hasNext()) {
-                String line = s.nextLine();
-                System.out.println(line);
-                message.append(line).append("\n");
-            }
-            return message.toString();
-        } catch (FileNotFoundException e) {
-            throw new IneffaException("Error: cannot find help.txt file in " + path);
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream(path);
+
+        if (inputStream == null) {
+            throw new IneffaException("Error: cannot find help file in classpath: " + path);
         }
+
+        Scanner scanner = new Scanner(inputStream);
+        StringBuilder message = new StringBuilder();
+        while (scanner.hasNextLine()) {
+            String line = scanner.nextLine();
+            System.out.println(line);
+            message.append(line).append("\n");
+        }
+
+        return message.toString();
     }
 }

@@ -43,10 +43,6 @@ test {
     }
 }
 
-application {
-    mainClass.set("Ineffa")
-}
-
 shadowJar {
     archiveBaseName = "ineffa"
     archiveClassifier = null
