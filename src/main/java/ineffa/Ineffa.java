@@ -11,7 +11,7 @@ import ui.Ui;
  * Simulates a Personal Assistant Chatbot.
  */
 public class Ineffa {
-    private final Storage storage;
+    private Storage storage;
     private TaskList tasks;
     private final Ui ui;
     private boolean isExit = false;
@@ -23,8 +23,8 @@ public class Ineffa {
      */
     public Ineffa(String filePath) {
         ui = new Ui();
-        storage = new Storage(filePath);
         try {
+            storage = new Storage(filePath);
             tasks = new TaskList(storage.loadFileContents());
         } catch (IneffaException e) {
             ui.showError(e.getMessage());

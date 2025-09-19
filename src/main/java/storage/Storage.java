@@ -23,8 +23,27 @@ public class Storage {
      *
      * @param filePath File location of text file.
      */
-    public Storage(String filePath) {
+    public Storage(String filePath) throws IneffaException {
         this.filePath = filePath;
+        ensureFileExists();
+    }
+
+    /**
+     * Ensures text file exists, else create it.
+     */
+    private void ensureFileExists() throws IneffaException {
+        try {
+            File file = new File(filePath);
+            File parentDir = file.getParentFile();
+            if (!parentDir.exists()) {
+                parentDir.mkdirs();
+            }
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+        } catch (IOException e) {
+            throw new IneffaException("Failed to create data file: " + e.getMessage());
+        }
     }
 
     /**
